@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body></body>
+</html>
+<script type="text/javascript">
+//如果一个项目中有只需要几个兼容的话处理  就可以做以下操作
+    document.body.onclick=function (e){
+        e=e||window.event;
+        e.stopPropagation? e.stopPropagation(): e.cancelBubble=true;
+    };
+//假如一个项目需要对事件对象做很多的兼容处理，最好使用以下；
+    document.body.onclick=function(e){
+        if(!e){//没有e的话，在IE下是window的下面的 window.event;
+            e=window.event;
+            e.target= e.srcElement;
+            e.stopPropagation=function(){
+                e.cancelBubble=true;
+            };
+            e.preventDefault=function(){
+                e.returnValue=false;
+            }
+        }
+    }
+</script>
+
+
+
+
+

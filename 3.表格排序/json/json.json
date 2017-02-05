@@ -1,0 +1,13 @@
+[{
+  "name":"刘晓璐","age":20,"sex":1,"score":99
+},{
+  "name":"胡涛","age":25,"sex":0,"score":89
+},{
+  "name":"张三","age":50,"sex":0,"score":78
+},{
+  "name":"武大郎","age":26,"sex":"未知","score":95
+},{
+  "name":"令狐冲","age":22,"sex":0,"score":100
+},{
+  "name":"任盈盈","age":49,"sex":1,"score":79
+}]

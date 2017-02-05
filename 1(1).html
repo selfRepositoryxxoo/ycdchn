@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body></body>
+</html>
+<!--
+<script type=text/javascript>
+    var num = 100;
+    function print() {
+        console.log(num);//undefined
+        var num;
+    }
+    print();
+    ~function (num) {
+        console.log(num);//100
+        var num = 10;
+    }(100)
+    ~function (num) {
+        console.log(num);//函数是申明的时候直接赋值了
+        var num = 10;
+
+        function num() {
+        }
+    }(100)
+
+    function getType(obj) {
+         ~function (str) {
+            return Object.prototype.toString.call(obj) == '[object ' + str + ']'
+        }()
+    }
+</script>-->
+<!--<script type="text/javascript">
+    var num = 100;
+    var obj = {
+        num: 200,
+        inner: {
+            num: 300,
+            print: function () {
+                console.log(this.num)
+            }
+        }
+    };
+    obj.inner.print();//300
+    var func = obj.inner.print;
+    func();//100
+    (obj.inner.print)();//300
+    (obj.inner.print = obj.inner.print)();//100
+</script>-->
+<script type="text/javascript">
+
+
+    function getType(obj) {
+        var ary = ['number', 'string', 'null', 'undefined', 'boolean', 'RegExp', 'Array', 'Date', 'Object', 'String', 'Number'];
+        for (var i = 0, len = ary.length; i < len; i++) {
+//            console.log(ary[i])
+            var type = Object.prototype.toString.call(obj) == '[object ' + ary[i] + ']';
+//            console.log(type);
+            if (type == 'true') {
+                console.log(ary[i])
+            }
+        }
+//        return ary[i]
+    }
+    getType(123)
+
+</script>

@@ -1,0 +1,223 @@
+1.传统的表单元素
+    * 1.1 form： input(text,password,radio,checkbox,button,submit,reset,hidden,file),
+                  label,textarea(禁止拖动resize=false)
+    *  1.2.HTML中表单元素的升级（ie6-8不兼容）
+         1.给表单元素添加一个叫做placeholer的属性，用来设置默认的提示信息(ie下处理兼容问题)
+         2.input 新添了很多的新的类型，search,url,email,tel,number(数字),range(拖动条),
+                 color(色板),data(日历),time(小时分钟)....、
+                 (pc端使用新类型不多主要原因是无法处理IE下的兼容问题，移动端比用)
+         3.根据不同的类型，手机会调取出最符合用户的虚拟键盘，方便要用户输入不需要再切换键盘一个个找需要的字符
+         4.移动端设上不存在物理键盘，所使用的都是虚拟键盘，移动端大部分手机都没有keyup和keydown事件
+         5.HTML为表单元素提供的方法：this.checkValidity()-->如果当前的input设定了特殊类型，例如email
+           number..那么浏览器
+           CSS3中验证INPUT设置了特殊的验证方式
+           xxx input:valid(){}/*正确*/
+           xxx input:invalid(){}/*错误*/
+    * 1.3
+         1.移动端物理键盘：移动端少用fixed，尤其是对于这中需要输入内容调取键盘的
+              解决办法：1)首先保证当前页面只有一屏幕的高度，我们可以通过position:absolute 定位到底部但是中间区域的内讧
+                          实现滚动
+                         2)引入iscroll.js实现中间区域的局部滚动
+2.本地存储
+    *  2.1 页面之间的通讯，A页面 ，B页面，我们需要在B页面中的A页面中的一些信息
+              1)URL传参：从A页面跳转到B页面，我们把A页面的一些操作信息通过地址栏URl问号传参的方式传递给B页面
+                         这样的就话B页面就可以获取到A页面中的操作信息
+              2)iframe:嵌套：我们可以在A页面中吧B页面嵌套进来，然后利用一些iframe提供的方法获取到B页面的内容(逐渐减少应用)
+              3）目前前端最新解决方案是采用"模块化开发" SEA.js
+              4)本地存储
+    * 2.2 本地存储
+             1)cookie存储到客户端本地的(session存储到服务器上) 兼容所有浏览器
+             2)HTML5新增的API(WebStorage) localStorage,sessionStorage (IE6-8不兼容)
+                 localStorage:—>持久计划存储到本地
+                 sessionStorage-->会话存储(当页面关闭，存储的sessionStorage的值就清除了)
+    *2.3  cookie
+             -->cookie 存储有大小限制，一般情况下，浏览器规定每一个源下的cookie最高只能存储4Kb，存储量非常小，我们只能存储一些
+             -->cookie 有过期时间的时候，我们设置一个cookie的时候可以指定过期的时间(但是大部分我们设置的时间没什么用
+                        我们用安全卫士清理电脑垃圾和浏览器缓存，大部分情况下都会把存储的cookie信息删掉
+              -->用户可能会安全的角度禁用cookie(无痕浏览，谷歌的隐身模式)
+              -->cookie.js
+
+    *2.4  localStorage
+             -->localStorage也同样大小限制，一般情况下一个源下最多存储5M内容
+             -->localStorage 没有过期时间，除非认为删除(js删除，在控制台删除)才会移除掉
+             --> 用法  localStorage.setItem("tc","sunflower");
+                        console.log(localStorage.getItem("tc")) ;
+                        localStorage.remove("tc");-->根据key值删除当前
+                        localStorage.clear();-->清除当前源下所有的信息
+             -->刷新数据一直存在
+             -->安全问题：不管是cookie和localStorage都是明文存储，(在控制台可以看到)重要数据不要存储在本地如果非要存储
+                         需要加密
+             -->对于密码加密采用MD5加密
+    *2.5  sessionStorage
+             浏览器关闭数据不存在，
+             escape()加密 unescape()解码
+
+3.移动端事件
+    *3.1 移动端事件模型
+           -->移动端事件模型：
+               touch 单手机的操作都是有touch事件模型控制的(点击tap，单击，双击，长按，滑动，左滑，右滑，上下左右滑)
+               gesture:多手指的操作都是由gesture事件模型控制的(缩放pinchIn或者pinchOut，旋转rotate)
+           重力感应应用是手机的感应器处理的
+
+    *3.2 touch
+            --> touchstart 手指按下
+            --> touchmove  手指移动
+            --> touchend   手指离开
+            --> touchcancle 在操作过程中出现意外情况导致程序突然退出，在touchcancle事件中可以记录一些东西。
+         tips:点击和滑动的区别：手指的移动是否发生了30px的偏移，偏移超过30px算作滑动否则算点击
+              点击和双击的区别：300ms内是否触发了第二次touchstart
+              点击和长按的区别：750ms内是否触发了touchend
+              滑动的四个方向：touchstart的时候记录手指的起始位置，在touchmove的时候随时记录最新的位置，并计算xy的偏移值
+                              如果x轴偏移的值大于y轴就是左右滑动，相反就是上下滑，
+                              假设是左右滑，我们需要判断是偏移的值是不是大于0，大于0就是右滑，反之左滑
+    *3.3    移动端经常使用的事件库
+               fastClick.js 解决pc点击300ms延迟的问题
+               hammer.js    国际上流行的一个专门处理移动端事件库
+               touch.js     百度云touc手势事件库 (API:http://touch.code.baidu.com/touch-0.2.14.min.js)
+               zepto.js     移动端的小型jquery,jquery是pc端的，zp是专门为移动端的开发
+                            (API:http://www.css88.com/doc/zeptojs/)
+               MD5.js        用于密码的不可逆转加密
+               html5.min.js  让IE兼容HTML5标签
+               swiper.js      轮播图
+               iScroll.js     区域滚动条
+               cookie.js       对cookie操纵
+4.移动端的图片失真
+    *4.1
+
+
+移动端第一天
+1、HTML5
+   ->HTML/XHTML/DHTML ->超文本(不仅仅是文本还可以是图片等)标记语言 XHTML比HTML更加的严谨一些 DHTML页面中的内容是动态绑定
+   ->HTML5是在传统的HTML4的基础上增加一些常用的新的内容,对于原有的并没有做太多的修改
+
+   1、新增加了一些用来构建页面结构的语义化标签
+     header、footer、nav、section(区域)、article(文章)、aside(标注)、figure(配图)、figcaption(配图说明)、hgroup(副标题,但是目前的编辑器都不会识别这个标签,浏览器识别)...
+
+     不管是PC端还是移动端,如果想要进行SEO的优化,建议大家使用最新的HTML5语义化标签来搭建页面的结构
+
+
+   2、修改或者删除了一些传统的标签
+     修改:
+      <hr>之前是一条直线,现在虽然体现出来的还是一条直线,但是它的语义化变为了上下区域的分隔符
+      <small>之前的意思是文字小,现在虽然文字体现的还是小,但是它的意思变为了附属细则
+      <strong>之前的意思是加粗,现在的意思变为了重点强调
+      所谓的修改只是在修改标签之前的语义化
+
+     删除:
+      <font> <big>
+      删除不是真正的删除不能用了,如果用了浏览器还是可以渲染出来的,只是不建议使用,因为已经不具备之前的语义化了
+
+   3、新增加一些用来标识文本的元素标签:<mark>、<time>
+
+   4、提出新的音视频处理方案:<audio> <video> (业内普遍认为音频和视屏是HTML5最具特色的改变之一)
+      ->在没有HTML5之前我们的音视频播放都需要基于FLASH,如果使用FLASH播放需要浏览器安装额外的插件
+
+   5、对于传统的表单元素进行了完善
+      ->传统表单元素:form、lable、input(text、radio、checkbox、button、submit、reset、password、hidden、file...)、select、textarea(文本域)
+      ->新增加的其中一部分也是最常用的是：对于input增加了很多新的类型和给表单元素新增加几个属性
+        <input type='search、url、email、tel、number、time、date、color、range...' placeholder='提示'/>
+
+   6、新增加<canvas>绘图
+
+   7、提供一些常用的API
+      ->本地存储:webStorage(localStorage、sectionStorage)
+      ->获取地理位置信息
+
+   8、提供了离线存储
+
+   9、webScoket/webWorks
+      ->实时通讯项目:长连接、长轮询
+      ->长轮询:每隔一定时间向服务器重新发送请求从而获取到最新的数据（非常消耗服务器性能的）
+      ->长连接:向服务器发送请求,服务器不一定立马把内容返回,如果没有最新的数据可以保持当前连接挂起,什么时候有新数据在向客户端返回,客户端接收到数据后绑定,完成绑定立即重新向服务器发送请求...
+
+移动端整理第二天
+   1、  IE下处理placeholder的兼容问题
+      ~function () {
+              var userEmail = document.getElementById("userEmail"),
+                      userEmailTip = document.getElementById("userEmailTip");
+
+              //->处理IE对PLACEHOLDER不兼容的问题
+              if (/MSIE/i.test(navigator.userAgent)) {
+                  //1)把在HTML结构中设置的值清空,然后在把我们设定的提示显示
+                  userEmail.placeholder ? userEmail.placeholder = "" : null;
+                  userEmailTip.style.display = "block";
+
+                  //2)点击提示信息也让文本框获取到光标
+                  userEmailTip.onclick = function () {
+                      userEmail.focus();
+                  };
+
+                  //3)在键盘操作的时候判断文本框中是否存在内容,存在的话隐藏提示,反之显示提示信息
+                  userEmail.onkeyup = userEmail.onkeydown = function (ev) {
+                      var val = this.value;
+                      userEmailTip.style.display = val.length === 0 ? "block" : "none";
+                  };
+              }
+          }();
+
+  2、关于meta标签
+       设置屏幕方向为横屏还是竖屏
+          <meta name="screen-orientation" content="portrait|landscape">
+
+          设置是否全屏，yes表示强制浏览器全屏
+          <meta name="full-screen" content="yes">
+
+          缩放不出滚动条
+          <meta name="viewport" content="uc-fitscreen=no|yes"/>
+          设置no后用户缩放与标准浏览器缩放一直，设置为yes后，用户缩放金放到图片和文字，不出现横向滚动条。
+
+          排版
+          <meta name="layoutmode" content="fitscreen|standard" />
+          ?fitscreen模式简化页面处理，适合页面阅读节省流量，standard模式和标准浏览器一致；一旦设置layoutmode meta后，用户使用浏览器提供的的排版模式选项将会无效。
+
+         夜间模式
+         <meta name="nightmode" content="enable|disable"/>
+
+         强制图片显示
+         <meta name="imagemode" content="force"/>
+         UC浏览器为了节省流量，为用户提供了无图模式，但是如果页面的图片是必不可少的，如验证码的，需要强制浏览器显示图片，可以设置imagemode， 不影响子页面。通过META设置图片加载方式会作用于整个页面，如果希望对单个图片进行设置，那么可以使用这个
+         <img src="..." show="force"/>
+
+         使用了application这种应用模式后，页面讲默认全屏，禁止长按菜单，禁止收拾，标准排版，以及强制图片显示。
+         <meta name="browsermode" content="application"/>
+
+         [QQ 浏览器x5内核定制标签说明]
+         设置屏幕方向
+         <meta name="x5-orientation" content="portrait|landscape"/>
+         设置全屏
+         <meta name="x5-fullscreen" content="true" />
+         设置屏幕模式
+         <meta name="x5-page-mode" content="app" />
+  3、REM和font-size
+         html{
+           1REM=100px;
+           }
+     适应各种尺寸的手机屏幕
+           <script type="text/javascript">
+                 ~function () {
+                     var desW = 750,
+                             winW = document.documentElement.clientWidth;
+                     document.documentElement.style.fontSize = winW / desW * 100 + "px";
+                 }();
+             </script>
+  4、swiper的使用
+           ->初始化Swiper
+              var s = new Swiper(".swiper-container", {
+                  loop: true,
+                  autoplay: 3000,
+                  pagination: ".swiper-pagination",
+                  effect: "cube"
+              });
+  5、HTML audio/video标签
+          语法：<audio src=""></audio> <video src=""></video>
+          属性： autoPlay="autoPlay"--->音频就绪后自动播放
+                 controls="controls" --->显示播放按钮
+                 preload="preload"  --->如果出现该属性，则音频在页面加载时进行加载，并预备播放。
+                                           如果使用 "autoplay"，则忽略该属性。
+          方法：play()开始播放音频/视频
+                pause() 暂停当前播放的音频/视频
+                load()  重新加载音频/视频元素
+          区别：video:多了一个poster="";--封面图(只有preload=none的时候poster才有作用)
+  6.盒子模型
+          传统的盒子模型：content-box：容器的宽度=BORDER+PADDING+WIDTH(内容和盒子宽度)
+          CSS3新的盒子模型(border-box):容器的宽度，不管盒子当前的容器

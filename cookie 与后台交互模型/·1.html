@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="" name="myForm">
+    名字：<input type="text" name="name"/>
+    密码：<input type="text" name="password"/>
+    <button id="a">按钮</button>
+</form>
+</body>
+</html>
+<script src="cookie.js"></script>
+<script>
+    var key=document.myForm.name.value
+    var value=document.myForm.password.value
+    var btn=document.getElementById('a')
+    btn.onclick=function(){
+        var key=document.myForm.name.value
+        var value=document.myForm.password.value
+        cookie.set(key,value)
+    };
+</script>

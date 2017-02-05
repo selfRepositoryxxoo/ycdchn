@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.box{
+    width: 300px;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid lightseagreen;
+    border-radius: 10px;
+    margin: 20px auto;
+}
+.box .text,.box .pas,.box .btn{
+    width: 200px;
+    height: 28px;
+    margin: 10px auto;
+}
+.box .btn{
+    text-align: center;
+    line-height: 28px;
+}
+.shop{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    margin: 100px auto;
+}

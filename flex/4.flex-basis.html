@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>分配剩余的空间</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 200px;
+            height: 600px;
+            background: pink;
+            list-style: none;
+            display: flex;
+            flex-direction:row;
+        }
+        .item{
+            width: 100px;
+            height: 100px;
+            flex-basis: 40%;
+        }
+        .container li:nth-child(1){
+            background: red;
+        }
+        .container li:nth-child(2) {
+            background: palegreen;
+        }
+        .container li:nth-child(3){
+            background: deepskyblue;
+        }
+       /*
+       百分比 0% ->如果父容器的宽度是auto,则子容器的宽度就是自身内容的宽度
+       具体值 20px
+       auto 如果设置了width的值,则以width值为准,没有设置则是自身内容的宽度
+
+       */
+    </style>
+</head>
+<body>
+<ul class="container">
+    <li class="item">1111</li>
+    <li class="item">2222</li>
+    <li class="item">3333</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            width: 50px;
+            height: 300px;
+            border:2px solid darkgoldenrod;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="box">天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀
+    天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀的翅膀天使的翅的翅膀天使的翅
+    的翅膀天使的翅的翅膀天使的翅</div>
+</body>
+</html>
+<script>
+    var box=document.getElementById("box");
+    var flag=1;
+    ~function(){
+       var val=box.scrollTop;
+        box.scrollTop+=flag;
+        if(box.scrollTop==val){
+            flag*=-1
+        }
+        var time=window.setTimeout(arguments.callee,10)
+    }()
+
+
+
+</script>
+

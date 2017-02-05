@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="jquery-1.11.3.js"/>
+</head>
+<body>
+<input type="text" value=""/>
+
+<div class="fenye">
+    <ul class="clear">
+        <li href="#"><a href="#"></a>FIRS</li>
+        <li href="#"><a href="#"></a>PREV</li>
+        <li><a href='list_3_14.html'>141</a></li>
+        <li><a href='list_3_14.html'>1432</a></li>
+        <li><a href='list_3_14.html'>143</a></li>
+        <li><a href='list_3_14.html'>143</a></li>
+        <li class="thisclass">13</li>
+        <li><a href='list_3_14.html'>14</a></li>
+        <li><a href='list_3_11.html'>11</a></li>
+        <li><a href='list_3_15.html'>1512</a></li>
+        <li><a href='list_3_15.html'>1513</a></li>
+        <li><a href='list_3_15.html'>151</a></li>
+        <li><a href='list_3_15.html'>151</a></li>
+        <li><a href='list_3_15.html'>152</a></li>
+        <li><a href='list_3_15.html'>152</a></li>
+        <li><a href='list_3_15.html'>152</a></li>
+        <li><a href='list_3_15.html'>152</a></li>
+        <li><a href='list_3_15.html'>153</a></li>
+        <li><a href='list_3_15.html'>154</a></li>
+        <li><a href='list_3_15.html'>155</a></li>
+        <li href="#"><a href="#">NEXT</a></li>
+        <li href="#"><a href="#">LAST</a></li>
+    </ul>
+</div>
+<div class="boxbtn" id="boxbtn">
+    <span>FIRS</span>
+    <span>PREV</span>
+    <ul id="pageList"> <li class="bg">1</li> <li class="null">2</li> <li class="null">3</li> <li class="null">4</li> <li class="null">5</li> <li class="null">6</li> <li class="null">7</li> <li class="null">8</li> <li class="null">9</li></ul>
+    <span>NEXT</span>
+    <li></li>
+    <span>LAST</span>
+    <input type="text" id="search">
+</div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+    var input = document.getElementById('input').value;
+    var pageList=document.getElementById('pageList');
+    $.ajax({
+        url: '',
+        success: function (data) {
+            //这是显示多少页
+            var total = data.length / input;
+            var frg=document.createDocumentFragment();
+            for(var i=1;i<total;i++){
+                var li=document.createElement('li');
+                li.innerHTML=i;
+                frg.appendChild(li)
+            }
+            pageList.appendChild(frg);
+            var lis=pageList.getElementsByTagName('li');
+            var firstpage=1
+            if(total>10){
+                lis[firstpage+9].innerHTML='....';
+                for ( i = firstpage+10; i <= total; i++) {
+                    lis[i].hide();
+                }
+            }
+        }
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+        var n = $('.fenye >ul li:nth-child').length;
+
+        var c = $(".fenye ul li").index($('.fenye ul li.thisclass'));
+        var setp1 = c;//这是第几个
+        var setp2 = n - c; //后余 n是100 c是5个 也就是第5个显示
+        if (n > 10) {
+            if (c > 2) {
+                for (i = 2; i < parseInt(c); i++) {
+                    //2到5 个是隐藏的； 为什么从2开始 是因为 前两个是 上页或者下页
+                    $(".fenye ul li").eq(i).hide()
+                }
+            }//这个是后面的  10个开始
+            for (y = c + 5; y < setp2 + 3; y++) {
+                $(".fenye ul li").eq(y).hide()
+            }
+            $(".fenye ul li").eq(n - 3).text('...');
+        } else if (n == 10) {
+            $(".fenye ul li").eq(n - 3).text('...');
+        }
+    });
+
+
+
+
+
+</script>

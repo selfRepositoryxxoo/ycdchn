@@ -1,0 +1,132 @@
+在PC端，我们很多时候当鼠标划入的时候会给一个颜色差
+        hover
+【移动端：】在移动端，一般用户点击一个按钮的时候我们会给一个按下态（触觉回馈）
+         div:active{ }
+
+【CSS3：】  移动端：meta:vp  按tab
+    ->常用的一些属性（盒子圆角、盒子阴影、盒子背景颜色渐变、多列布局、文本裁切）
+    ->新增加一些强大的CSS选择器
+    ->对于background的变革：
+    background-size（背景图片的大小）/background-origin(背景是从哪个方向开始的)/background-clip指定背景图片的展示范围
+    【RGBA】(背景颜色透明度)(255,0,0,0.5) 指定背景颜色透明，里面的子元素是不透明的（而之前用opacity设置透明的话，里边内容也会透明）。
+    ->CSS3变形：2D变形/3D变形   transform:translate\translateX\translateY\translateZ\ rotate(X|Y|Z)\SCALE(缩放)\skew(倾斜)
+                matrix (矩阵变形)
+    ->CSS3 动画：transition 过渡动画  animation 帧动画 (@key-frames)
+    ->CSS3盒子模型：box-sizing \ box-flex 伸缩盒子模型
+    box-sizing:有content-box （普通的盒子模型）和border-box两个值 后者是固定宽度，即使以后你设置pading什么的，最大宽度都不变，只是内容宽度变化。
+    ->CSS3媒体查询：@media
+    ->CSS3导入网络字体包：非常消耗性能  使用的不多而且语法也很简单  @font
+
+CSS3
+【1.选择器】
+  .box.bg{}     ->      二次筛选：先把所有 .box的找到，在找到的集合中把拥有 .bg 的筛选出来
+  .span:not(.green){ }  二次筛选：所有的span中没有green样式类名的
+  .box  .bg {}  ->后代筛选：把具有.box样式的元素的后代元素中具有.bg样式的元素找出来
+  .box span{}   -> 所有后代中的 span
+  .box+span     ->下一个弟弟并且是 span标签
+  .box~span     ->所有弟弟中的span
+  .box>a
+【2.结构伪类】
+  .box > span:first-child{}  子元素中的第一个
+  .box > span:last-child {}
+  .box>span:nth-child(even) {}  所有的偶数
+  .box>span:htn-child(odd){}  所有的奇数
+  .box>span:nth-child(3n+1) { }  n是从0开始的正整数   分别写3n  3n+1  3n+2的样式
+  .box>span:nth-last-child(){} 倒着数
+
+  .box[name^='zhufeng'] {} ^开头  $结尾  *包含  ~有多个，但是有一个是zhufeng  |   name=zhufeng或者name=zhufeng-peixun
+   background-size:100% 100%; 设置背景图片的尺寸：这里的意思是当前盒子有多大背景图片就有多大
+
+------------------------------------变形与动画----------------------------------------------------------------------------
+【CSS3的变形】
+ ->CSS3变形：2D变形/3D变形   【transform】:translate\translateX\translateY\translateZ\ rotate(X|Y|Z)\scale(缩放)\skew(倾斜)
+                matrix (矩阵变形)
+    -webkit-transform /-moz-transform/-ms-transform/-o-transform
+        ->如果在PC端使用这个属性，我们需要把浏览器的前缀都增加上，这样才可以兼容更多的浏览器
+        ->如果在移动端使用给这个属性，我们只需要写两套,并且必须写两套，否则很多的安卓机器都不兼容，并且顺序不能调换
+        （必须先写加前缀的在写不加前缀的）--->但是在JS中不需要写两套，只需要写 webkitTransition 即可
+         -webkit-transform;
+         transform;
+
+    CSS3中支持的变形效果： 【因为transform开启了硬件加速,实现的变形效果要比传统的DOM改变性能好而且流畅】
+     1）位移   translate(X|Y|Z)    translate(100px,200px)
+     -webkit-transform：translate(100px,200px);
+             transform：translate(100px,200px);
+     2）旋转  rotate(X|Y|Z)        rotate(45deg)  顺时针旋转45度
+      -webkit-transform：rotate(45deg);
+              transform：rotate(45deg);  默认是z轴
+     3）缩放  scale (0.5)
+        我们使用scale实现放大或者缩小，也可以直接通过宽高来改变大小，但是建议大家使用transform中的scale来实现，
+        因为transform开启了硬件加速,实现的变形效果要比传统的DOM改变性能好而且流畅
+
+      -webkit-transform:scale(0.5);缩小为原来的一半
+              transform:scale(0.5);
+     4）倾斜 skew
+         -webkit-transform:skewX(45deg);沿着X轴倾斜45度  不写X的话默认是沿着X轴
+                 transform:skewX(45deg);
+     5）矩阵自定义变形规则  matrix  按照自己的数学公式变形
+
+【CSS3动画】
+ ->CSS3 动画：transition 过渡动画  animation 帧动画 (@key-frames)
+    CSS3动画分为两种：过渡动画/帧动画
+    A（起始位置）-》B（结束为止）
+    【过渡动画】：从A到B是按照既定的运动效果过渡过去
+    【帧动画】：可以实现A到B之间的多方向多重运动，它和播放的影片一样是一帧一帧运动的
+    过渡动画：给当前的元素设置一个过渡的效果，以后只要当前元素的样式等发生改变，都会按照之前设置的过渡效果实现动画。
+    /**设置过渡动画样式值：****/
+    -webkit-transition-property: all ;//设置需要执行过渡动画的样式属性  一般都写all，所有的样式属性都需要执行过渡动画
+    -webkit-transition-duration: 1s ;//设置动画运动的总时间 1s 或者 1000ms
+    -webkit-transition-timing-function: linear;
+    //这是运动的方式，例如 linear就是匀速运动  ease-in  ease-out  cubic-bezier 三次贝塞尔曲线
+     -webkit-transition-delay:0s; 这是动画延迟时间，0s就是没有延迟，立即执行
+
+     合成一个：
+     -webkit-transition:all 1s linear 0s;
+     transition:all 1s linear 0s;
+
+     --》需要触发契机 ，比如hover或者click等。
+        假设开始我给#box设置了过渡效果，然后再样式中立马把它的样式发生了改变，这样的话我们其实是看不到动画执行的。
+
+        ->需要由触发执行这样的契机才可以
+           1）可以使用动态操作伪类  ：hover   :active
+           2）使用媒体查询触发  @media
+           3）使用JS触发
+
+/*animation 属于模拟的帧动画，默认情况下动画运动完成会回到第一帧的位置（本质是虽然看到元素在运动，
+        但是元素的位置其实是没有变化的) 如果想要让动画运动完成停留在最后一帧的位置，我们需要增加如下的属性*/
+        /*-webkit-animation-fill-mode: both;*/
+        /*animation-fill-mode: both;*/
+        -webkit-animation:myTwoMove 2s linear 0s infinite both;//合并中最后的both就是这个作用
+
+     animation和transition用的时候的区别？
+      1）能用animation实现的，就不用transition  目标位置值事先能确定的就用animation,因为animation需要将目标值设置在CSS中因为animation 是虚拟动画，不会改变DOM回流  并且页面加载的时候，会先把CSS加载，不用JS
+      2）hover进来和出去都需要有效果的时候用transition  ，animation只能设置hover进来的效果--单方向的效果
+
+
+项目中很多时候直接用animate.css：它是目前国际上通过的CSS3帧动画库，里面提供了项目中最常用的动画，
+          不管是bootstrap swiper..等常用的框架都在使用animate.css
+---------------------------------------------------------------------------------------------------------
+
+之前的但不常用的background-attachment:scroll;或者 fixed
+ background-size（背景图片的大小）/background-origin(背景是从哪个方向开始的)/background-clip指定背景图片的展示范围
+
+ background-origin: padding-box; /*默认值是padding-box 从填充区域就开始设置背景图片了  */
+ background-origin: border-box; /*从边框就开始设置背景图片*/
+ background-origin: content-box; /*从内容开始设置背景图片  不含padding*/
+
+   background-size: 100% auto; /*背景图片的宽度和盒子保持一致，高度自适应*/
+   background-size: 100% 100%; /*当前的盒子有多宽多高，我们的背景图片就有多宽多高*/
+   background-size: contain; /*把当前的背景图片看全  如果不设no-repeat 的话，那么会平铺   也是按照宽高比例缩放的 */
+   background-size: cover; /*把图片放大或者缩小铺满整个盒子，但是是按照宽和高的比例放大或者缩小  图片不会变形*/
+
+    background-clip: border-box; /*超出边框的部分进行裁切*/
+    background-clip: padding-box; /*超出padding的部分进行裁切*/
+    background-clip: content-box; /*超出内容的部分进行裁切*/
+
+
+      /*使用滤镜来设置模糊度*/
+     -webkit-filter:blur(2px) ;
+     filter:blur(2px) ;
+      /*灰度*/
+     -webkit-filter:grayscale(1) ;
+      filter:grayscale(1);

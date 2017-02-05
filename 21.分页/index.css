@@ -1,0 +1,114 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+input {
+    outline: none;
+}
+
+.box {
+    width: 800px;
+    padding: 20px;
+    border: 1px solid lightcoral;
+    box-shadow: 3px 3px 10px 0 #cccccc;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+h2 {
+    height: 35px;
+    overflow: hidden;
+    background: lightskyblue;
+}
+
+h2 span {
+    float: left;
+    width: 200px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+
+.pageCon {
+    height: 300px;
+}
+
+.pageCon li {
+    height: 30px;
+    overflow: hidden;
+}
+
+.pageCon li:nth-child(even) {
+    background: lightskyblue;
+}
+
+.pageCon li:hover {
+    background: darkorange;
+}
+
+.pageCon li span {
+    float: left;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.boxbtn {
+    float: right;
+    margin-top: 20px;
+}
+
+.boxbtn span {
+    margin-left: 5px;
+    float: left;
+    width: 45px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #cccccc;
+}
+
+.boxbtn ul, .boxbtn li {
+    float: left;
+}
+.boxbtn li{
+    margin-left: 5px;
+    line-height: 20px;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #cccccc;
+}
+#search{
+    width: 45px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.boxbtn li.bg{
+    background: darkorange;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

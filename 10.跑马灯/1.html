@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 微软雅黑;
+            font-size: 14px;
+        }
+        #box{
+            width: 1000px;
+            margin: 50px auto;
+            padding: 0 10px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px dashed darkorange;
+            background: darkgray;
+
+        }
+        #wrap{
+            height: 35px;
+            white-space: nowrap;/*强制文字不换行*/
+            overflow: hidden;/*没有这行就不会移动*/
+            /*写overflow：auto会出现出现竖向滚动条写 overflow: hidden;+white-space: nowrap;/就可以出现了*/
+        }
+        #wrap span{
+            color: darkorange;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        #wrap div{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="wrap">
+        <div id="conBegin">
+            <span>通知：</span>提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的
+        </div>
+        <div id="conEnd">
+            <span>通知：</span>提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的提那个好似的
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../js/utils.js"></script>
+<script>
+    var box = document.getElementById("box");
+    var wrap = document.getElementById("wrap");
+    var conBegin = document.getElementById("conBegin");
+    var conBegin_width = utils.getCss(conBegin, "width");
+    //console.log(conBegin_width);
+    function move() {
+        wrap.scrollLeft++;
+        if (wrap.scrollLeft >= conBegin_width) {//wrap.offsetWidth;不可以
+            wrap.scrollLeft = 0;
+        }
+    }
+
+    var timer = window.setInterval(move, 10);
+    box.onmousemove = function () {
+        window.clearInterval(timer)
+    };
+    box.onmouseout = function () {//离开的时候我们要再次开始但是
+        timer = window.setInterval(move, 10);
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+   /* var timer=window.setInterval(function(){
+        var curLeft=warp.scrollLeft;//我先得到这个值，scrolleft这个值，让其动，处理之
+        // 后在通过conBegin.scrollLeft得到处理之后的结果，一样就已经到头了。
+        warp.scrollLeft=curLeft+1;
+       /!* var newLeft=warp.scrollLeft;
+        //利用了scrollLeft是存在最大值的思想，在累加1之前获取一个值，在累加之后再获取一个值，如果两个值相等了，就是说明累加没有任何作用的，也就是所谓的到头了
+        if(curLeft=newLeft){
+           // window.clearInterval(timer)
+            warp.scrollLeft=0;//这样做虽然从头开始了，但是有切换闪动的效果，不好
+        }*!/
+    },10)*/
+
+
+</script>

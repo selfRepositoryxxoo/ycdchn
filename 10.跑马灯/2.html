@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        #box{
+            width: 1000px;
+            padding: 10px;
+            margin: 50px auto;
+            border: 1px solid darkorange;
+        }
+        #wrap{
+            height: 30px;
+            line-height: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #wrap span{
+            font-weight: bold;
+            font-size: 14px;
+            color: red;
+        }
+        #wrap div{
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="wrap">
+        <div id="conBegin">
+            <span>通知：</span>天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀
+        </div>
+        <div id="conEnd">
+            <span>通知：</span>天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的翅膀
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var box=document.getElementById("box");
+    var wrap=document.getElementById("wrap");
+    var conBegin=document.getElementById("conBegin");
+    var conBegin_width=getCss(conBegin,"width");
+    function getCss(curEle,attr){
+        var val=null,reg=null;
+        if("getComputedStyle" in window){
+            val=window.getComputedStyle(curEle,null)[attr]
+        }else{
+            if(attr==="opacity"){
+                val=curEle.currentStyle["filter"];
+                reg=/^alpha\(opacity=(\d+(\.\d+)?)\)$/;
+                return reg.test(val)?reg.exec(val)[1]/100:1;
+            }
+            val =curEle.currentStyle[attr];
+        }
+        reg=/^(\d+(\.\d+)?)(px|em)$/;
+        return reg.test(val)?val=parseFloat(val):val
+    }
+
+    function move(){
+        wrap.scrollLeft++;
+        if(wrap.scrollLeft>=conBegin_width){
+            wrap.scrollLeft=0;
+        }
+    }
+    var timer=window.setInterval(move,10);
+    box.onmousemove=function(){
+        window.clearInterval(timer)
+    };
+    box.onmouseout=function(){
+        timer=window.setInterval(move,10)
+    }
+
+~function(){
+   oDiv.scrollTop++;
+    window.setTimeout(arguments.callee,10);//闭包调用定时器只能是window.setTimeout
+    window.setInterval(arguments.callee,10);//这个不可以回卡死
+}()
+
+
+
+
+
+
+
+
+
+
+
+</script>

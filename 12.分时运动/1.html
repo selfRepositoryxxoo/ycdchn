@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        ul,li{
+            margin: 0;padding: 0;
+        }
+        li{
+            width: 200px;
+            height: 100px;
+            background: darkgoldenrod;
+            margin: 20px 0;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+</body>
+</html>
+<script>
+    var oLis=document.getElementsByTagName("li");
+    console.log(oLis);
+    for(var i=0;i<oLis.length;i++){
+        ~function(i){
+            window.setInterval(function(){
+                oLis[i].style.left=50*i+"px"
+            },i*100)
+        }(i)
+    }
+
+
+
+</script>

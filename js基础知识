@@ -1,0 +1,439 @@
+1、 网页的组成部分：
+          结构层:html(超文本标记语言 搭建结构)
+          表现层：css（层叠样式表）
+          动作层：JavaScript（轻量级的脚本语言（松散）   实现动效和数据交互）
+
+ 2、JavaScript主要是是为了网页交互而设计的一种轻量级脚本语言
+     1）ECMAscript(第5版本) :变量,命名规范,数据类型,操作语句等核心的语法知识   js的语法完全兼容
+     2) DOM(document object model)文档对象模型 -- 提供了操作页面元素常用的属性和方法  document -- 文档 操作元素 有兼容性问题  可以解决
+     3) BOM(browser object model )浏览器对象模型 -- 提供了浏览器常用的属性和方法  window -- 浏览器兼容性问题很大 我们无法解决
+
+ 3、鼠标移入效果的实现思想：
+     思想：鼠标移入一个元素，让另一个元素显示，否则反之；
+     display/z-Index/位移配合display:none/height/opacity/visiblity....
+
+ 4、 css引入页面的方式:行内式,内嵌式,链接式(外链式和导入式)
+     js引入页面的方式:行内式(不安全,不推荐使用),内嵌式,外链式
+     解析：行内（“”里面就是用来执行JS代码的），
+           内嵌(<script></script>)，
+           外链（script-src）
+     -注：在外面的script两个标签中间写任何JS代码都不会执行
+         如何来写JS：找到谁？给谁加什么事件？执行什么事？（匿名函数，有名字的函数--注意，若有事件等号后面的函数调用时，
+        一定不能加括号，否则函数会自己执行，如果有参数，需要外面多加一层函数，里面调用和传参）
+
+ 5、 常用的简单的调试js代码的方式：
+       1.alert -页面中直接弹出你要输出的内容；缺点：不宜打印对象 object对象
+       2.confirm('你要输出的内容')--》返回值：确定-true； 取消-false；
+       3.console.dir(); 可以输出一个对象所有的属性和方法；
+       4.console.log(); 只可以打印出来这个对象所属的标签 与alert 相比，可以把对象完整打印出来；
+       5.console.table(); 制表符
+       6.页面输出的两种方式：
+           document.write() 注意：如果在window.onload事件里，输出document.write(''),会清空页面中以前所有的内容；
+           obj.innerHtml->输出任意标签中包裹的内容（即使隐藏的元素，它的内容也能输出）
+
+ 6、变量严格区分大小写 var a /var A
+         * 首字符只能是字母,下划线,$(美元符)(首字符不能是数字),其他的字符可以是字母,数字,下划线,$
+         * 开始是$符一般是jquery库或者其他的类库里声明的变量
+         * 首字符是下划线的,一般表示私有的变量 var _total;
+         * 采用驼峰式的命名法(由多个单词组合,第一个字符小写，从第二个单词开始首字符大写)
+         * 可以是中文,但是不推荐
+
+ 7、window 浏览器
+       * 只要是script标签下的代码都是在window下的,因此这边的window.可以省略不写
+   document 文档
+       * . 表示从属的关系
+       操作属性的方式：1.“.” 2.[] 注意：中括号里面必须加引号
+       所有点能操作的，中括号都能操作，但是所有中括号能操作的，点不一定能操作；
+
+ 8、JS中写复合样式
+    一定不能用—，必须从第二个单词开始，首字母大写；eg：background-color-----backgroundColor
+
+ 9、注释
+   多行注释快捷键：ctrl+shift+/
+   注：以后做项目调试时，千万不要随便乱删代码，注释掉即可；
+
+ 10、  if语句的几种写法：
+          1.
+          if(条件1）{
+              条件为真执行此语句1
+          }else{
+              条件为假时执行此语句2
+          }
+          //以下两者只适合执行一个语句
+          2. 条件1 && 条件为真执行此语句1； -走if语句
+             条件1 || 条件为假执行此语句2； -走else语句
+
+              a||b 如果a为真 则返回a的值，如果a为假 则返回b的值
+              a&&b 如果a为真则返回b的值 如果a为假（不往后走）则返回a的值
+                 &&>||
+                  优先级&&大于||
+
+
+          3. if(条件）条件为真执行此语句；
+          4.三目：三元表达式   写法：条件？语句1：语句2；
+          条件1？条件为真执行此语句1：条件为假时执行此语句2；
+          if(条件1）{
+              条件为真执行此语句1
+          }
+          以上只有一个语句时，三目如何写？
+          条件1？条件为真执行此语句1：null；
+
+ 11、条件1&&条件2  条件1为真，执行条件2，条件1为假，返回条件1
+     条件1||条件2  条件1为真，执行条件1，条件1为假，返回条件2
+
+ 12、for循环四部曲: 1、定义变量 2、判断条件、 3、执行语句 4、i++
+     面试题：
+          for (var i = 0; i < 10; i++) {
+              if (i <= 3) {
+                  i += 2;
+                  continue;
+              } else {
+                  i += 3;
+                  break;
+              }
+              i += 5;
+          }
+         console.log(i);
+
+         答案：9
+
+
+
+ 13、数据类型检测：
+        typeof：常用于检测基本数据类型
+        constructor
+        instanceOf： 检查一个对象是否属于某个类  （公有属性用in ）
+                             求对象上的公有属性；
+                             function hasPubProperty(attr,obj){
+                                    return attr in obj && !obj.hasOwnProperty(attr)
+                                    //思路：1）必须是对象上的一个属性；2）他一定不是私有属性；1和2是&&的关系；
+                                    //返回值：一定是布尔值；
+                                }
+
+        Object.prototype.toString.call();
+
+
+ 14、    //第一种
+            var oDiv = document.getElementById("div1");
+          console.dir(document.getElementById("div1"));
+    //    oDiv.style.width='100px';
+
+        //第二种
+    //    var oStyle = document.getElementById("div1").style;
+    //    oStyle.width = "300px";
+
+        //第三种
+        var oDivStyleWidth = document.getElementById("div1").style.width;
+        oDivStyleWidth = "600px"  //失效
+
+ 15、任意数求和
+         var n1=sum(1,2);
+         var n2=sum(1,2,3,'3','12px');
+         function sum(){//参数不确定的情况下，用arguments
+             var total=0;
+             //循环遍历参数中的每一项
+             for(var i=0; i<arguments.length; i++){
+                 var cur=arguments[i];
+                 //判断参数必须是数字才能进行相加
+                 if(!isNaN(cur)){
+                     total+=Number(cur);//Number()严格转换，避免字符串拼接；
+                 }
+             }
+             return total;//一定要同return返回我们的求和结果
+         }
+         alert(n1);
+         alert(n2);
+
+ 16、求0-10之间不能被3整除的数之和
+     递归思想：
+      function sum(n){
+          if(n==0){return 0;}
+          if(n%3==0){
+              return sum(n-1);
+          }
+          return n+sum(n-1);
+      }
+      var result = sum(10);
+
+      1-5之间相乘 5*4*3*2*1
+      function fn(n){
+         if(n == 1){
+             return 1;
+         }
+         return n*fn(n-1);
+      }
+      var res = fn(5);
+
+ 17、修改日期--字符串
+          var str='2016/5/1 14:9:1';
+          var ary=str.split(' ');
+          var aryL=ary[0].split('/');
+          var aryR=ary[1].split(':');
+          document.body.innerHTML=aryL[0]+'年'+toDou(aryL[1])+'月'+toDou(aryL[2])+'日 '+toDou(aryR[0])+'时'+toDou(aryR[1])+'分'+toDou(aryR[2])+'秒';
+          function toDou(n){
+              return n>=0&&n<10?'0'+n:''+n;
+          }
+
+18、自执行函数的写法：
+        (function(){})();
+        ~function(){}();
+        !function(){}();
+        +function(){}();
+        -function(){}();
+
+20、闭包：函数执行的时候，会形成一个新的私有作用域，保护里面的变量不受外界的干扰，函数这种保护机制，叫做闭包；
+    1.为什么要使用闭包：
+        1）防止变量名冲突
+        2）可以通过传参的方式，对全局变量的在私有作用域里重新赋值；
+    2.闭包里面的值，如果想修改全局的值，window.xx=xx;
+    3.闭包可以用来封装方法，最后通过window.方法名=方法名；把封装好的函数，让外面可以用到；
+
+21、运算符的优先级 算术运算符》比较运算符》逻辑运算符》赋值运算符
+
+22、this的五种用法:
+   1.自执行函数里的this，永远都是window；
+   2.如果一个元素通过一个行为来触发一个方法，方法中的this就是当前这个元素；
+   3.函数调用的时候，看前面是否有'.'，有'.'的话，'.'前面是谁，this就是谁；
+   4、在构造函数里，this指的是实例
+   5、call、apply、bind可以改变this指向
+
+23、属性的判断：
+   1）in:私有属性+公有属性；
+   2)hasOwnProperty:查看是否是对象上的私有属性；
+
+   扩展：封装对象上的共有属性
+         function hasPubProperty(attr,obj){
+             return attr in obj && !obj.hasOwnProperty(attr)
+             //思路：1）必须是对象上的一个属性；2）他一定不是私有属性；1和2是&&的关系；
+             //返回值：一定是布尔值；
+         }
+
+24、任意数求和
+     function sum(){
+            var total=0;
+            for(var i=0; i<arguments.length; i++){
+                //total+=arguments[i]
+                var cur=arguments[i];
+                if(!isNaN(cur)){
+                    total+=Number(arguments[i]);//如果不用Number，很可能字符串拼接；
+                }
+            }
+            return total;
+        }
+        alert(sum(1,2));
+        alert(sum(1,2,'3','13px'));
+
+25、JS中处理兼容的几种思想
+       1）try。。catch。。 不建议使用，因为无论浏览器是否支持，都要走一遍try里的语句；性能比较差
+       2）属性判断，可以使用attr in obj/ obj[attr]; 建议使用：因为if和else里只会走一个；
+       3）大招：浏览器判断 ；一般情况不用；
+
+26、ie中逐断点调试f5  chrome是f8
+27.offsetLeft(四舍五入)当给offsetLeft添加小于0.5的时候offsetLeft没有什么变化，大于0.5的时候会改变+1
+28.事件运动中的tips 当div>img的时候，会超出文档的宽高  解决办法：给img父级添加overflow:hidden
+29.作用域累积
+         1）递归思想
+          function move(ele,target){
+              console.log("ok");
+                  window.setTimeout(function(){move(ele,target)},15);
+             }
+        //作用域不销毁
+         2） function move(ele,target){
+                    function _move(){
+                      console.log("ok");
+                    }
+                  }
+             window.setInterval(_move,15);
+       // 在move里面定义_move一直被定时器占有，则本次move方法执行的作用域销毁不了
+       //但是_move运行的作用域每次都释放了，这样的写法不会出现作用域嵌套积累，性能比较好
+30.var a=[0,1,2,function(){alert(this)}];
+   a[3]();---->this-->a
+   var obj={a:"a",b:"b",c:"c",d:function(){alert(this)}}
+   obj.d()---->this-->obj
+   obj[d]()--->this-->obj
+   var obj2={0:"a",1:"b",2:"c",d:"function(){alert(this)}"}
+    obj2.3()---->this--->obj2  //属性名为数字的时候不能用“.”的方式
+   obj2[3]()---->this--->obj2
+31.Kettle.prototype=new EventEmitter;//会破坏原有的原型引用，改变原有的prototype指向会指向实例地址
+  Kettle.prototype.__proto__=EventEmitter.prototype//nodeJS常用此方法
+32:原型继承
+33.div--HTMLDivElement--HTMLElement--Element--Node--EventTarget-->Object
+   document --HTMLDocument--Document--Node--EventTarget--Object
+         EventTarget---事件管理
+   EventEmitter在 nodeJS是公开开放的一个类，你可以给自己定义的类实现发布事件（自己定义的类继承一下EventEmitter就可以）
+34.面试题
+      304 未修改
+          缓存
+          涉及两个响头部
+              last-modified 请求的静态资源最后一次修改的事件 GMT
+              etag 请求的静态资源通过摘要算法计算得到的散列值
+          涉及俩个请求首部
+              if-modified-since  和last-modified对应
+              if-none-match 和etag对应
+           强缓存涉及的两个头部
+                expiresed 静态资源过期时间  浏览器的GMT
+                cache-control  缓存多少秒
+35 MIME type
+    html text/html
+    js  text/javascript
+    css  text/css
+    png  image/png
+    gif  image/gif
+    json  application/json
+    表单提价  application/x-www-form-urlencoded
+36.http1.1和http2.0
+   1.多路复用
+   2.首部压缩
+   3.服务器端推送
+37.URL：统一资源定位符
+       URI：统一资源定位符
+       URN：统一资源名称
+38.特征检
+        feature decetion
+        if(window.XMLHttpRequest){
+
+        }
+ 39.  在js兼容方法有两种渐进增强和优雅降级
+                  渐进增强：优先支持低版本浏览器  低版本-->高版本
+                  优雅降级：优先支持高低版本浏览器   高版本 -->低版本  在js兼容方法有两种渐进增强和优雅降级
+40.
+    * readyStatue有5中状态
+    * 0  UNSENT  ajax对象刚刚实例化完成 默认值
+    * 1  OPEND   执行完ajax open会变成1
+    * 2  HEADERS_RECEIVED  开始接受响应首部
+    * 3  LOADING  开始接受响应主体
+    * 4  DONE    ajax操作的http事务完成
+41.undefined在低版本下的bug
+         chrome下  undefined不能被重写
+           var a;
+           undefined=1
+           undefined===a--true
+          低版本浏览器 undefined可以被重写
+            var a=1;
+
+             undefined=1
+            undefined===a--false
+      解决八法：
+         var isUndefined=function (data){
+          return data=void 0;
+         }
+42.转成json对象
+         jsonParse(jsonString)
+         eval('('+jsonString+')')
+         (new Function("return" +jsonString))();
+43.ready和onload的区别
+ //dom树加载完成之后执行此函数，只是html代码加载完成
+    $(document).ready(function(){
+        console.log("ready");
+    })
+    //整个html结构加载完之后执行  整个页面全部加载完成
+    window.onload=function(){
+        console.log("onload");
+    }
+44.link和@import
+<style type="text/css"> @import url("style.css"); </style>
+<link rel="stylesheet" href="style.css" type="text/css"/>
+俩者区别
+    使用link方式，浏览器会先装载完CSS文件再装载HTML的主体部分，所以显示出来的页面从开始就是带样式效果的。
+    而采用@import方式，浏览器则会先装载完整个HTML文件后再装载CSS文件。
+为什么会这样呢，究其根本：
+    link属于XHTML标签（功能不局限于导入CSS），而@import则是CSS提供的一种规则（CSS2.1以后，要考虑兼容）。
+    从用户体验上来说，前者会更友好一些，特别是当网页文件比较大而网速比较慢的时候，后者页面就会出现明显的闪烁（开始会没有样式效果，当CSS加载完成后，忽然呈现出样式效果）。
+    另外，当使用Javascript控制DOM去改变样式的时候，只能使用link方式，因为@import眼里只有CSS，不是DOM可以控制的。
+
+
+45.json字符串包括：对象 字符串
+    jsonp原理
+         1.我们利用script标签来实现跨域请求
+         2.server定义好的那个用来设置返回数据中的执行函数的函数名那个参数名---jsonp  callback   ---thisValNameIs
+         3.jsonpcallback后面跟的value(thisValNameIs=e)必须是全局作用域下的一个函数
+         4.server返回的数据格式是固定的  functionName(/*json data*/)
+jsonp的注意事项
+         1.因为jsonp是通过script的src属性去加载跨域资源，所以jsonp请求全部是get方法请求
+         2.get方法系有的特点jsonp全部都有
+         3.所有的jsonp接口必须按照格式返回 functionName(/*json data*/)
+jsonp不是ajax？
+46.CORS跨域资源共享
+cross origin resourse sharing
+WithCredentials 凭借cors跨资源共享
+注意事项
+   1.兼容性问题ie8+
+   2.需要server设置响应首部Access-Control-Allow-Origin
+   3.可以使用get post head delete put options
+
+   jsonp和跨域资源共享的相同点和不同点
+   相同点：
+   1.都用来解决接口级别跨域请求的
+   2.只要是跨域就需要对方的server配合
+
+   不同点
+   1。实现的方式不同   jsonp使用script实现的，而cors使用浏览器提供的api实现的
+   2.http方法使用不同  jsonp只能使用get方法，而cors是get post head put delete options 都可以用
+   3.兼容性 不同   jsonp没有兼容性    而cors是IE8+
+   47:面试题：一个盒子在页面正中居中
+        css      *******************************************
+                      position: absolute;
+                      top:50%;
+                      left:50%;
+                      margin-top:-50px;
+                      margin-left:-50px;
+                      width: 100px;
+                      height: 100px;
+                      background: pink;
+                  *******************************************
+                    不同考虑盒子的宽高
+                     position: absolute;
+                     top:0;
+                     left:0;
+                      bottom: 0;
+                     right:0;
+                     margin: auto;
+                     width: 100px;
+                     height: 100px;
+                     background: pink;
+        JS        *******************************************
+
+                    var winW = document.documentElement.clientWidth || document.body.clientWidth,
+                            winH = document.documentElement.clientHeight || document.body.clientHeight;
+                    var box = document.getElementById('box'),
+                            boxW = box.offsetWidth,
+                            boxH = box.offsetHeight;
+                    box.style.position="absolute";
+                    box.style.left=(winW-boxW)/2+"px";
+                    box.style.top=(winH-boxH)/2+"px";
+48:
+           text-transform:uppercase;全部大写
+           text-transform:capitalize;首字母大写
+49：
+           <script type="text/javascript">
+                 /*判断检测浏览器是手机还是pc*/
+                 var curURL = window.location.href;
+                 if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) ||
+                         (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
+                     //手机端浏览器
+                     if (curURL.indexOf("www.qq.com ") > -1) {
+                     window.location.href = "http://xw.qq.com/";
+                 }
+                 } else {
+                     //pc端浏览器
+                     if (curURL.indexOf("xw.qq.com") > -1) {
+                         window.location.href = "http://www.qq.com/";
+                     }
+                 }
+
+           </script>
+50.检测手机是横屏竖屏
+      var flag = "onorientationchange" in window,
+                  event = flag ? "orientationchange" : "resize";
+          window.addEventListener(event, function () {
+              if (flag) {
+                  if (Math.abs(window.orientation) === 90) {
+                      //->横屏
+                      alert("横");
+                  } else {
+                      //->竖屏
+                      alert("竖");
+                  }
+              }
+          }, false);
+

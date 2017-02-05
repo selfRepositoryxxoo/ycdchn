@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #outer {
+            width: 75%;
+            height: 200px;
+            margin: 0 auto;
+            overflow: hidden;
+            font-size: 98px;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        #inner {
+            width: 500%;
+            height: 200px;
+            transition-duration: 1s;
+        }
+
+        #inner div {
+            float: left;
+            width: 20%;
+            height: 200px;
+            line-height: 200px;
+            background: palegoldenrod;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div>111</div>
+        <div style="background: paleturquoise">222</div>
+        <div style="background: palevioletred">333</div>
+        <div style="background: darkorange">444</div>
+        <div style="background: darkcyan">555</div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //var oDivs=document.getElementsByTagName("div");
+    var oDivs = document.querySelectorAll("#inner>div");
+    // $Each(function(index,intem){})//这个item是原生的
+    [].forEach.call(oDivs, function (item, index) {
+        item.i = index;//重点他不是this
+        item.addEventListener("touchstart", start, false);
+        item.addEventListener("touchmove", move, false);
+        item.addEventListener("touchend", end, false)
+    });
+    function start(e) {
+        this.x = -this.i * this.offsetWidth;
+        this.mx = e.changedTouches[0].pageX;
+    }
+    function move(e) {
+        var val = e.changedTouches[0].pageX - this.mx + this.x;
+        this.parentNode.style.transform = "translate(-" + val + "px,0)";
+    }
+    //自动的过去
+    function end(e) {
+        if (e.changedTouches[0].pageX > this.mx) {
+            var next = this.i - 1;
+            if (next < 0)next = 0;
+        } else {
+            var next = this.i + 1;
+            if (next >= oDivs.length - 1)next = oDivs.length - 1;
+        }
+        this.parentNode.style.transform = "translate(-" + next * this.offsetWidth + "px,0)";
+    }
+</script>

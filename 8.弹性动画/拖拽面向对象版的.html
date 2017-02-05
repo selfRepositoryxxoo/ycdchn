@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<style type="text/css">
+div{ width:100px; height:100px; position:absolute; top:0; left:0; background:red; overflow:hidden; cursor:move; -webkit-user-select:none;}
+</style>
+</head>
+
+<body>
+<div id="div1">div,div,div</div>
+<div id="div2" style="left:200px; "><img src="img.jpg" width="100" height="100"></div>
+<div id="div3"  style="left:200px; top:100px; "><img src="img2.jpg" width="100" height="100"></div>
+<div id="div4"  style="left:300px; top:300px; "><img src="img3.jpg" width="100" height="100"></div>
+</body>
+</html>
+<script src="js/event.js"></script>
+<script>
+function Drag(ele){
+	this.ele=ele;
+	this.x=null;
+	this.y=null;
+	this.mx=null;
+	this.my=null;
+	var that=this;
+	this.DOWN=function(e){that.down.call(that,e)};
+/*	this.DOWN=processThis(this.down,this);
+	this.DOWN=this.down.bind(this);*/
+	
+	on(this.ele,"mousedown",this.DOWN);
+	this.MOVE=processThis(this.move,this);
+	this.UP=processThis(this.up,this);
+}
+Drag.prototype.down=function(e){
+	this.x=this.ele.offsetLeft;
+	this.y=this.ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	
+	if(this.ele.setCapture){
+		this.ele.setCapture();
+		on(this.ele,"mousemove",this.MOVE);
+		on(this.ele,"mouseup",this.UP);
+	}else{
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+	}
+	e.preventDefault();
+}
+
+Drag.prototype.move=function(e){
+	this.ele.style.left=e.pageX-this.mx+this.x+"px";
+	this.ele.style.top=e.pageY-this.my+this.y+"px";
+	
+}
+
+Drag.prototype.up=function(e){
+	
+	if(this.ele.releaseCapture){
+		this.ele.releaseCapture();
+		off(this.ele,"mousemove",this.MOVE);
+		off(this.ele,"mouseup",this.UP);	
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+	}
+	
+}
+
+/*var obj1=new Drag(div1);
+var obj2=new Drag(div2);
+var obj3=new Drag(div3);
+var obj4=new Drag(div4);*/
+
+new Drag(div1);
+new Drag(div2);
+new Drag(div3);
+new Drag(div4);
+
+</script>

@@ -1,0 +1,59 @@
+ console.log($("#ul li:eq(2)"))是从0开始计算
+  $("ul>li:odd").css("background","red")
+  ul   li:nth-child(even)偶数行
+    ul   li:nth-child(odd)奇数行
+  这个和li：
+  ul   li:nth-child(1){
+  ul下面的第一个子元素并且是li。不一定是li
+          }
+  #inner li:nth-of-type(1){/!*ul下的li子元素,然后再找到第一个这个肯定是li
+                background: red;
+  获取第一元素：
+  $("li").filter(".box").css("background","red")
+$("li").first().css("background","red")
+ $("li:first").css("background","red")
+jQUery.2版本 不支持移动端事件  移动端实现动画肯定使用css3，性能js实现动画
+window.jQuery = window.$ = jQuery;
+1)选择器:通过传递对应的规则，获取元素集合。就是把私有的jQuery方法执行，selector, context
+context=context||document.一定要知道是可以穿两个参数的。限定了当前的范围。
+选择器是有一条非常强大的reg是来匹配的。不需要理解。
+2）jQuery本身是一个类。我们获取的结果是这个类的实例(返回的是一个对象 jQuery对象)。换句话说，我们通过选择器获取到的结果
+可以调用jQuery.prototype上的方法;
+jQuery定义在jQuery在prototype上的公共方法，供jQuery的实例，（通过选择器获取的结果）；
+例如addClass css attr  $(".w1").addClass()
+把jQuery看做一个普通对象，定义在属性上。
+callBack  ajax  each  调用可以是用jQuery.ajax()  $.ajax();
+5）扩展方法。extend 这个方法，在jQuery属性上存在，同时是在jQuery的prototype上也有。
+$.extend()扩展到的对象的属性上；完善类库，给类库中提供一些常用的核心方法。
+$.fn.extend() 在原型上。 给类的实例提供更多的操作的方法。主要用于基本jQuery的插件编写。
+获取jQuery中的     元素的offsetWidth 使用var yi=$mark.outerWidth();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

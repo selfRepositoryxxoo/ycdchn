@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            height: 100px;
+            width: 100px;
+            position: absolute; /*绝对定位 relative可以吗*/
+            left: 0;
+            top: 0;
+            background: lightsalmon;
+            cursor: move;
+            -webkit-user-select: none;
+            overflow: hidden; /*这个是消除图片拖拽不行的 border：none不行*/
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<div id="box1" style="top: 100px; left: 100px"><img src="1.jpg" style="width: 100px;height: 100px"/></div>
+<div id="box2" style="top: 200px;left: 200px"><img src="2.jpg" style="width: 100px;height: 100px"/></div>
+<div id="box3" style="top: 100px; left: 0; background: lightblue;"></div>
+</body>
+</html>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript" src="drag-oop.js"></script>
+<script type="text/javascript">
+    var oDivs = document.getElementsByTagName("div");
+  /*  for (var i = 0; i < oDivs.length; i++) {
+        new Drag(oDivs[i]);
+    }*/
+   var obj=new Drag(box);
+    obj.on("dragstart",clearEffect);
+    obj.on("dragging",getSpeed);
+    obj.on("draggend",fly);
+    obj.on("draggend",drop);
+    function clearEffect() {
+        clearInterval(this.flyTimer);
+        clearInterval(this.dropTimer)
+    }
+    function getSpeed(e) {
+        if (!this.pre) {
+            this.pre = e.pageX;
+            return
+        }
+        this.speedFly = e.pageX - this.pre;
+        this.pre = e.pageX
+    }
+    function fly() {
+        //这是一个要改的地方
+        var _this = this.ele, speedFly = this.speedFly,
+                maxL = (document.documentElement.clientWidth || document.body.clientWidth) - _this.offsetWidth;
+        _this.flyTimer = window.setInterval(function () {
+            speedFly *= 0.98;
+            if (Math.abs(speedFly) < 0.5) {
+                window.clearInterval(_this.flyTimer)
+            }
+            var curL = _this.offsetLeft + speedFly;
+            if (curL < 0) {
+                curL = 0;
+                speedFly *= -1;
+            } else if (curL > maxL) {
+                curL = maxL;
+                speedFly *= -1;
+            }
+            _this.style.left = curL + "px";
+        }, 10)
+    }
+    function drop() {
+        var _this = this.ele, drop = 10,
+                flag = 0,
+                maxT = (document.documentElement.clientHeight || document.body.clientHeight) - _this.offsetHeight;
+        _this.dropTimer = window.setInterval(function () {
+            drop += 10;
+            drop *= 0.98;
+            if (flag >= 2) {
+                window.clearInterval(_this.dropTimer);
+                return
+            }
+            var curT = _this.offsetTop + drop;
+            if (curT >= maxT) {
+                curT = maxT;
+                flag++;
+                drop *= -1
+            } else {
+                flag = 0;
+            }
+            _this.style.top = curT + "px";
+        }, 10)
+
+    }
+
+
+
+
+</script>

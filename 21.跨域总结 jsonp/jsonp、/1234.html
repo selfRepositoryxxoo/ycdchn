@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" id="search"/><input type="button" id="button" value="baidu"/>
+<ul>
+</ul>
+</body>
+</html>
+
+<script src="jsonp.js"></script>
+<script>
+    function baidusuggest(word, callback) {
+        jsonp('http://suggestion.baidu.com/su', {wd: word}, "cb", function (data) {
+            callback(data);
+
+            console.log(data)
+        })
+    }
+    //http://suggestion.baidu.com/su?wd=%E5%8C%97%E4%BA%AC&cb=window.jsonp.cb0
+    /*    baidusuggest('北京',function(data){
+     console.log(data)
+     });*/
+    var button = document.getElementById('button');
+    var search = document.getElementById('search');
+    var ul = document.getElementsByTagName('ul')[0];
+    ul.onclick=function(e){
+        e=e||window.event;
+        var target= e.target|| e.srcElement;
+
+        //这个地址是人家的不能乱改
+        window.open('https://www.baidu.com/s?wd='+encodeURIComponent(target.innerHTML),'_blank')
+    }
+
+    button.onclick = function () {
+        var val = search.value;
+        if (val) {
+            baidusuggest(val, function (data) {
+                ul.innerHTML = '';
+                var con = data.s;
+                var fragment = document.createDocumentFragment();
+                for (var i = 0; i < con.length; i++) {
+                    var li = document.createElement('li');
+                    li.innerHTML = con[i];
+                    fragment.appendChild(li)
+                }
+                ul.appendChild(fragment);
+            })
+        }
+
+    }
+
+
+</script>

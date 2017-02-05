@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link charset="utf-8" type="text/css" rel="stylesheet" href="css/reset.css" />
+    <style>
+        .boxlist{
+            width: 1200px;
+            margin:50px auto;
+        }
+        .boxlist li{
+            position: relative;
+            float: left;
+            width: 290px;
+            height: 210px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .boxlist .imgBig{
+            position: relative;
+            height: 170px;
+            overflow: hidden;
+        }
+        .imgBig img{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 100%;
+            height: 200px;
+        }
+        .boxlist .title{
+            position: absolute;
+            top: 124px;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-indent: 5px;
+            font-size: 24px;
+            color: #fff;
+        }
+        .boxlist .desc{
+            height: 28px;
+            padding: 5px;
+            line-height: 28px;
+            border-bottom: 1px solid #ccc;
+            background: #f7f7f7;
+            font-size: 14px;
+        }
+        .boxlist li:hover .desc{
+            border-bottom: 2px solid red;
+        }
+        .boxlist li:hover .imgBig img {
+
+        }
+
+    </style>
+</head>
+<body>
+<ul class="boxlist clear">
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg" alt=""/>
+        </div>
+        <div class="title">黄山</div>
+        <div class="desc">出意料人 登高踏青赏春色</div>
+    </li>
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg" alt=""/>
+        </div>
+        <div class="title">黄山</div>
+        <div class="desc">出意料人 登高踏青赏春色</div>
+    </li>
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg" alt=""/>
+        </div>
+        <div class="title">黄山</div>
+        <div class="desc">出意料人 登高踏青赏春色</div>
+    </li>
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg" alt=""/>
+        </div>
+        <div class="title">黄山</div>
+        <div class="desc">出意料人 登高踏青赏春色</div>
+    </li>
+</ul>
+</body>
+</html>

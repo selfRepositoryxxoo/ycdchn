@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,body{
+            overflow: hidden;
+        }
+        .bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #bg1 {
+            background: url("images/1.jpg") no-repeat;
+            left: -1366px;
+            top: 0;
+        }
+
+        #bg1:target {
+            left: 0;
+            transition: all 1s ease-in;
+        }
+
+        #bg2 {
+            background: url("images/2.jpg") no-repeat;
+            left: 0;
+            top: -768px;
+        }
+
+        #bg2:target {
+            top: 0;
+            transition: all 1s ease-in;
+        }
+
+        #bg3 {
+            background: url("images/3.jpg?") no-repeat;
+            background-size: 0% 0%;
+        }
+
+        #bg3:target {
+            background-size: 100% 100%;
+            transition: all 1s ease-in;
+        }
+
+        #bg4 {
+            background: url("images/4.jpg") no-repeat center center;
+            background-size: 0% 0%;
+        }
+
+        #bg4:target {
+            background-size: 100% 100%;
+            transition: all 1s ease-in;
+        }
+
+        #bg5 {
+            background: url("images/5.jpg") no-repeat center center;
+            background-size: 0% 0%;
+            transform: rotate(0deg);
+        }
+
+        #bg5:target {
+            background-size: 100% 100%;
+            transform: rotate(360deg);
+            transition: all 1s ease-in;
+        }
+
+        #btn {
+            position: absolute;
+            bottom: 10%;
+            left: 20%;
+            width: 300px;
+            height: 40px;
+
+        }
+
+        #btn a {
+            float: left;
+            margin: 0 10px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            box-shadow: 0 0 0 20px transparent;
+        }
+
+        #btn a:hover {
+            box-shadow: 0 0 0 0 rgba(204, 110, 4, 0.5);
+            transition: box-shadow 0.5s ease-in
+        }
+
+        #btn a:nth-child(1) {
+            background: url("images/1.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #btn a:nth-child(2) {
+            background: url("images/2.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #btn a:nth-child(3) {
+            background: url("images/3.jpg?") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #btn a:nth-child(4) {
+            background: url("images/4.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #btn a:nth-child(5) {
+            background: url("images/5.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="bg" id="bg1"></div>
+<div class="bg" id="bg2"></div>
+<div class="bg" id="bg3"></div>
+<div class="bg" id="bg4"></div>
+<div class="bg" id="bg5"></div>
+
+<div id="btn">
+    <a href="#bg1"></a>
+    <a href="#bg2"></a>
+    <a href="#bg3"></a>
+    <a href="#bg4"></a>
+    <a href="#bg5"></a>
+</div>
+
+</body>
+</html>

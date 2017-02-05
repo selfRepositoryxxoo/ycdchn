@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul {
+            overflow: hidden;
+            width: 630px;
+            margin: 100px auto;
+        }
+
+        li {
+            width: 200px;
+            height: 200px;
+            background: #ccc;
+            font-size: 30px;
+            font-weight: bold;
+            line-height: 200px;
+            overflow: hidden;
+            float: left;
+            margin: 5px;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        li span {
+            position: absolute;
+            top: 0;
+            left: -200px;
+            width: 100%;
+            height: 100%;
+            background: red;
+            opacity: 0.4;
+            filter: alpha(opacity:40);
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li><span>模块1</span></li>
+    <li><span>模块2</span></li>
+    <li><span>模块3</span></li>
+    <li><span>模块4</span></li>
+    <li><span>模块5</span></li>
+    <li><span>模块6</span></li>
+</ul>
+</body>
+</html>
+<script>
+    function a2d(a) {
+        return a * 180 / Math.PI;//弧度的计算：当前多少弧度
+    } //判断移入的方向
+    function hoverDir(ele, oEvent) {
+        var x = ele.offsetLeft + ele.offsetWidth / 2 - oEvent.clientX;//x的最小值是-ele.offsetWidth / 2    最大值是ele.offsetWidth / 2
+        var y = ele.offsetTop + ele.offsetHeight / 2 - oEvent.clientY;
+       // console.log(Math.atan2(y, x));
+        return Math.round((a2d(Math.atan2(y, x)) + 180) / 90) % 4;//Math.atan2(y, x ) 返回的值是-PI---PI之间的数----所以a2d(a)返回的值是一个0到180的数  -----所以hoverDir返回值是一个0,1,2,3
+    }
+
+
+    //Math.atan2(y, x)   以盒子的中心位置为坐标原点，当从盒子的右侧滑入时
+    function hoverGo(ele) {
+        var oS = ele.children[0];//表示的就是SPAN标签
+        ele.onmouseover = function (ev) {
+            var oEvent = ev || window.event;
+            var oFrom = oEvent.fromElement || oEvent.relatedTarget;//relatedTarget 事件属性返回与事件的目标节点相关的节点。对于 mouseover 事件来说，该属性是鼠标指针移到目标节点上时所离开的那个节点。对于 mouseout 事件来说，该属性是离开目标时，鼠标指针进入的节点。
+            if (ele.contains(oFrom))return;//contains方法。如果A元素包含B元素，则返回true，否则false。---->表明鼠标已经移入到盒子里了
+            var dir = hoverDir(ele, oEvent); //根据方向重新设定遮罩层位置
+            switch (dir) {
+                case 0:
+                    oS.style.left = '200px';
+                    oS.style.top = 0;
+                    break;
+                case 1:
+                    oS.style.left = 0;
+                    oS.style.top = '200px';
+                    break;
+                case 2:
+                    oS.style.left = '-200px';
+                    oS.style.top = 0;
+                    break;
+                case 3:
+                    oS.style.left = 0;
+                    oS.style.top = '-200px';
+                    break;
+            }
+            startMove(oS, {top: 0, left: 0});
+        };
+        ele.onmouseout = function (ev) {
+            var oEvent = ev || event;
+            var oTo = oEvent.toElement || oEvent.relatedTarget;
+            if (ele.contains(oTo))return;
+            var dir = hoverDir(ele, oEvent); //根据移除的方向遮罩层进行相应的运动
+            switch (dir) {
+                case 0:
+                    startMove(oS, {left: 200, top: 0});
+                    break;
+                case 1:
+                    startMove(oS, {left: 0, top: 200});
+                    break;
+                case 2:
+                    startMove(oS, {left: -200, top: 0});
+                    break;
+                case 3:
+                    startMove(oS, {left: 0, top: -200});
+                    break;
+            }
+        };
+    }
+    window.onload = function () {
+        var oUl = document.body.children[0];
+        var aLi = oUl.children;
+        for (var i = 0; i < aLi.length; i++) {
+            hoverGo(aLi[i]);
+        }
+    };
+    function getStyle(ele, sName) {
+        return (ele.currentStyle || getComputedStyle(ele, false))[sName];
+    } //运动框架
+    function startMove(ele, obj, options) {//obj--当前元素  obj--->对象-->
+        options = options || {};
+        options.time = options.time || 700;
+        options.type = options.type || 'ease-out';
+        var begin = {};
+        var change = {};
+        for (var attr in obj) {//遍历数组
+            begin[attr] = parseFloat(getStyle(ele, attr));//起始值：当前元素属性开始的值
+            if (isNaN(begin[attr])) {
+                switch (attr) {
+                    case 'top':
+                        begin[attr] = ele.offsetTop;
+                        break;
+                    case 'left':
+                        begin[attr] = ele.offsetLeft;
+                        break;
+                    case 'width':
+                        begin[attr] = ele.offsetWidth;
+                        break;
+                    case 'height':
+                        begin[attr] = ele.offsetHeight;
+                        break;
+                    case 'opacity':
+                        begin[attr] = 1;
+                        break;
+                    case 'borderWidth':
+                        begin[attr] = 0;
+                        break;
+                }
+            }
+            change[attr] = obj[attr] - begin[attr];
+        }
+        var duration = Math.floor(options.time / 30);
+        var n = 0;
+        clearInterval(ele.timer);
+        ele.timer = setInterval(function () {//这个类似于动画库----animate
+            n++;//(类似于动画库中的时间累加)
+            for (var attr in obj) {//start[attr]  开始的位置
+                switch (options.type) {
+                    case 'linear':
+                        var cur = begin[attr] + change[attr] * n / duration;
+                        break;
+                    case 'ease-in':
+                        var a = n / duration;
+                        var cur = begin[attr] + change[attr] * Math.pow(a, 3);
+                        break;
+                    case 'ease-out':
+                        var a = 1 - n / duration;
+                        var cur = begin[attr] + change[attr] * (1 - Math.pow(a, 3));
+                        break;
+                }
+                if (attr == 'opacity') {
+                    ele.style.opacity = cur;
+                    ele.style.filter = 'alpha(opacity:' + cur * 100 + ')';
+                } else {
+                    ele.style[attr] = cur + 'px';
+                }
+            }
+            if (n == duration) {
+                clearInterval(ele.timer);
+                options.end && options.end();
+            }
+        }, 30);
+    }
+</script>

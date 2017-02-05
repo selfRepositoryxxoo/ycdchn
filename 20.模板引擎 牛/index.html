@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title></head>
+<body>
+</body>
+</html>
+<script src="yunCloud.js"></script>
+<script>
+    yunCloud.set({
+        loose: false
+    });
+    var jsonData = {//模板数据  要添加到页面上的
+        linkList: [
+            {href: 'http://www.baidu.com', alt: '百度一下'},
+            {href: 'http://pan.baidu.com', alt: '百度网盘'},
+            {href: 'http://yun.baidu.com', alt: '百度云'}
+        ]
+    };
+
+
+    var tpl = [
+        '<ul>',
+        '<% for(var i=0,len=linkList.length;i<len;i++){ %>',
+        '<% var val = linkList[i]; %>',
+        '<li><%= val|linkFilter %></li>',
+        '<% } %>',
+        '</ul>'
+    ].join('');
+
+    var linkFilter = function (data) {
+        return '<a href="' + data.href + '" alt="' + data.alt + '" >' + data.alt + '</a>';
+    };
+    yunCloud.register('linkFilter', linkFilter);
+    //这步的时候我们只是注册了一个方法；
+    //这个方法没有返回结果 所以是 undefined的
+    console.log(yunCloud.register('linkFilter', linkFilter));
+    //tpl是一个字符串，jsondata是一个数据模板；
+
+    var html = yunCloud(tpl, jsonData);
+    console.log(html);
+
+    document.body.innerHTML = html;
+
+</script>

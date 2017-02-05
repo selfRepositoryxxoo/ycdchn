@@ -1,0 +1,160 @@
+git config --global user.name "zfpx" 
+   
+git config --global user.email "zfpx@126.com"  
+
+touch 创建问价index.txt
+mkdir test  创建文件夹test
+
+ls  -all 查看目录 listshow
+
+cd test 进入到test的文件夹  change directory
+
+pwd 查看路径
+
+git init 初始化本地仓库
+
+git add index.txt 添加到本地仓库的暂存区
+
+git commit -m"注释" 提交到仓库
+
+
+
+一.本地仓库和远程仓库关联起来
+
+git remote add origin https://github.com/amgYen/testFactory.git
+
+-->origin 自己可以随便起   https://github.com/amgYen/testFactory.git 是远程仓库的地址
+
+查看关联的远程地址
+git remote -v 
+
+解除关联 
+git remote rm origin 
+
+二.远程仓库的内容更新到本地仓库
+
+git pull origin master
+
+三.把本地的内容提交到远程仓库 
+git push -u origin master
+
+-u 把本地的主分支(master)和远程的主分支(master)关联起来 (-u只需要第一次写,下一次就不需要写了)直接 git push origin master就可以了
+
+
+fork 课件仓库的地址  
+
+1.git clone https://github.com/你自己github的用户名/javascript201604.git 把远程的仓库地址克隆到本地 
+
+2.把本地的内容添加到本地仓库去 git add 文件名 git commit -m"注释
+
+3.关联珠峰培训课件仓库地址git remote add amgYen https://github.com/zhufengpeixun/JavaScript201604.git
+
+
+4.到自己github上的javascript201604这个仓库,点击按钮New pull request ->create pull request
+
+
+
+获得每日课件
+
+git clone https://github.com/zhufengpeixun/JavaScript201604.git
+
+git pull origin master  
+
+
+git 视频地址 http://www.zhufengpeixun.cn/course/3/lesson/list
+  esc   :wq 推出****************
+# 自己的github账号和邮箱
+- 配置用户信息
+配置邮箱
+```
+git config --global user.name zhufengpeixun1
+```
+配置账户
+```
+git config --global user.email 894918097@qq.com
+```
+可以通过不加邮箱和名字方式进行查看
+查看配置
+```
+git config --list
+```
+- 进入一个目录cd
+change directory
+```
+cd first1
+```
+- 初始化仓库
+告诉git这是一个git仓库
+```
+git init
+```
+- 查看所有内容
+```
+ls -al
+```
+- 创建一个文件
+- touch index.txt
+- 像文件内输出内容
+```
+echo hello > index.txt
+```
+- git status
+查看git状态
+- 从缓存区将文件拉回来
+```
+git rm --cached 文件的名字
+```
+- 提交
+```
+git commit -m "first"
+```
+- 查看commit过的内容
+```
+git log
+git log --oneline 显示成一行
+```
+- 在像文件内输出内容
+```
+echo world >> index.txt
+```
+echo world >> index.txt
+- 和远程仓库建立连接
+创建仓库 + new repository
+```
+git remote add origin 地址
+```
+- git remote -v
+查看当前的远程仓库
+- -u叫upstream
+```
+git push -u origin master
+```
+从缓存区内拿回来
+```
+git checkout index.txt
+```
+第一次 hello
+我们向文件内写入 hello world
+git add hello world
+
+现在仓库的内容是hello zfpx
+我们使用
+```
+git push origin master
+```
+让我们使用git pull
+```
+git pull origin master
+```
+- 处理冲突
+去掉所有<<<<<<<  =======>>>>>> 保留正确代码
+再进行提交
+```
+git add . git commit git push origin master
+```
+- 创建忽略文件
+```
+touch .gitignore
+```
+git reset --hard 版本号这是硬恢复；；
+

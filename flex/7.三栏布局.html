@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding:0
+        }
+        .header,.footer{
+            padding: 30px;
+        }
+        .main,.aside{
+            padding: 30px;
+            height: 100px;/*不用设置宽度，因为在弹性盒子上width是没有任何作用的*/
+        }
+        .header{
+            background: red;
+        }
+        .main{
+            background: deepskyblue;
+        }
+        .aside-1{
+            background: purple;
+        }
+        .aside-2{
+            background: green;
+        }
+        .footer{
+            background: pink;
+        }
+        .wrap{
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;/*换行 不换行无法运行*/
+        }
+        .wrap div{
+            flex: 1 100%;/*flex-grow:1;flex-shrink:1;flex-basis:100%*//*是父级的宽度*/
+        }
+        @media screen and (min-width: 600px){
+            .wrap  .aside{
+                 flex: 1 auto;/*auto是本身的宽度*/
+             }
+        }
+        @media screen and (min-width: 800px){
+            .wrap .main{
+                flex: 2 0%;/*这样的基准就是0*/
+            }
+            .aside-1{
+                order: 1;
+            }
+            .main{
+                order:2;
+            }
+            .aside-2{
+                order: 3;
+            }
+            .footer{
+                order: 4;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">header</div>
+    <div class="main">main</div>
+    <div class="aside aside-1">aside-1</div>
+    <div class="aside aside-2">aside-2</div>
+    <div class="footer">footer</div>
+</div>
+<div class="wrap">
+    <div class="header">header</div>
+    <div class="main">main</div>
+    <div class="aside aside-1">aside-1</div>
+    <div class="aside aside-2">aside-2</div>
+    <div class="footer">footer</div>
+</div>
+</body>
+</html>

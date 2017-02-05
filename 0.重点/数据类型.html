@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+1.数据类型分类
+    //js是弱类型的语言,声明的变量在赋值之前,并不知道它是什么数据类型的,只有赋值之后才能知道是什么数据类型
+    1）基本数据类型：字符串类型string ; 数字类型number;布尔boolean;null;undefined五大类
+    2）引用数据类型:
+        对象object：[],new Date(); /^\d+$/,{}.... 特点：属性名不重复
+        函数function
+            函数两部分：定义和调用
+            return：1.函数返回值 2.阻断程序执行
+            封装：
+            参数：1.形参 2.arguments（函数自带的接收实参的内部机制参数）
+            在非严格模式下：arguments和当前函数定义的形参是存在映射关系的，
+            但在严格模式下，arguments和当前函数定义的形参是不存在映射关系的，并且严格禁止我们用arguments.callee
+  ******基本数据类型和引用数据类型的本质区别：********
+     基本数据类型也称为是值类型的,只能描述一个特征
+     引用数据类型(对象类型)是复合数据类型的载体,可以描述多个特征
+     基本数据类型----操作的是值；
+     引用数据类型----操作的是引用地址；
+2.数据类型检测方法： typeof和Object.prototype.toString.call()返回结果是字符串
+    1、typeof   是真实的项目中非常常用且快捷的检测方式就是typeof
+      --》【比如检测是否为数字、布尔、字符、函数、undefined 除了对象和null的最佳检测方法】
+    //->通过typeof value检测数据类型返回的结果首先是一个字符串,然后在字符串中包含了对应的数据类型
+    //->typeof 数组/正则/对象 返回的结果都是"object",所以不能用其区分是数组还是正则
+    //->typeof null =>"object"  空对象指针  不指向任何的堆内存
+    //->typeof typeof typeof [] ->"string"
+     特点：1.基本数据类型的最佳方法，但是除了null，因为检测null的结果也是object
+           2.检测object的时候，不能检测细分类
+
+    2、instanceof:检测当前的实例是否属于这个类 ->在真实项目中,我们经常使用instanceof检测是数组还是正则还是其他的
+        某一个对象数据类型值 ->如果我们的项目源码采用的是面向对象编程思想开发的(我们创建了类和实例),
+        我们也会经常用instanceof检测某个实例是否属于某个类
+        //    var a = [];
+        //    console.log(a instanceof Array);//->true
+        //    console.log(a instanceof RegExp);//->false
+
+        //->instanceof的不足:
+            1)常规的基本数据类型值,不能使用instanceof进行检测 （使用字面量和创建实例方式创建的变量，使用instanceof检测结果不一样）  比如Number 和 String
+            ->字面量方式:不是严谨的实例,只不过由于JS的松散性导致了可以使用对应类原型上的方法
+                //    var num = 3.141592653;
+                //    var str = "珠峰培训";
+                //    console.log(num instanceof Number);//->false
+                //    console.log(str instanceof String);//->false
+                //    console.log(typeof num, typeof str);//->"number"、"string"
+
+            ->实例创建的方式:标准的面向对象创建,这样创建出来的才是严谨的实例
+                //    var num2 = new Number(3.141592653);
+                //    var str2 = new String("珠峰培训");
+                //    console.log(num2 instanceof Number);//->true
+                //    console.log(str2 instanceof String);//->true
+                // ***** console.log(typeof num2, typeof str2);//->"object"、"object"
+
+            2)只要这个类在当前实例的原型链上可以找到,那么用instanceof检测出来的结果永远为true
+                //[] ->Array.prototype ->Object.prototype
+                //    console.log([] instanceof Array);//->true
+                //    console.log([] instanceof Object);//->true
+
+                //    function Fn() {
+                        //    }
+                //    Fn.prototype = new Array;
+                //    var f = new Fn;
+                //f是数组的吗?->不是,因为数组需要有索引有length-->虽然科技继承Array上的方法，但是数组自带的私有属性有索引和length他没有
+                //    console.log(f instanceof Array);//->true
+
+    3、constructor
+        constructor和instanceof非常的类似:但是我们的constructor是可以自己随意修改的,
+       这样的话很容易出现检测出来的结果是不准确的,所以项目中基本上不用constructor来检测
+             //    var b = /^$/;
+            //    console.log(b.constructor === Array);//->false
+            //    console.log(b.constructor === RegExp);//->true
+            //    RegExp.prototype.constructor = Object;
+            //    console.log(b.constructor === RegExp);//->false
+    4、Object.prototype.toString.call()
+        ->Object.prototype.toString() 返回当前对象所属类的详细信息->"[object Object]":中括号是固定的,注意前边的object是小写
+        第一个object也是固定的,第二个Object代表当前的对象是Object这个类的实例
+
+        //【唯一一个没有漏洞的检测数据类型的方式】
+        toString需要注意的地方：
+        //所有的数据类型都有这个方法---》但是除了对象之外其他类型的都是转化为字符串
+        //->Null、Undefined这个两个特殊类型的类是存在的,在其原型上依然有toString的方法,只不过浏览器屏蔽了我们的主动调用,
+        但是我们可以隐性调用
+            //console.log("珠峰培训" + null + undefined);//->"珠峰培训nullundefined"  --》可见，null和undefined转化为了字符串
+
+            //var obj={name:"珠峰"};
+            //obj.toString() ->"[object Object]"
+            //->深入解析:
+            //-->obj.toString===Object.prototype.toString
+            //-->obj.toString() !== Object.prototype.toString() 因为第一种执行的时候,toString方法中的this是obj;
+                第二种toString中的this是Object.prototype;
+            //-->Object.prototype.toString.call(obj) ->我们只需要让Object原型上的toString方法执行,在执行的时候,
+            让里面的this变为括号内所写的值,那么返回的结果就是这个值所属类的详细信息
+            //    var ary = [];
+            //    console.log(Object.prototype.toString.call(ary) === "[object Array]");//->true
+            //    console.log(({}).toString.call(ary) === "[object Array]");
+
+3.基本数据类型之数值类型Number
+   数值Number类型：整数(正整数,负整数,0),小数,NaN(not a number 不讲理的数)
+   1）什么情况下的到的结果会是NaN
+    a.做数学运算(+,-,*,/,%)失败的时候
+    b.强制将其他数据类型转换成number类型失败的时候 (Number(),parseInt(),parseFloat())
+   2)数值类型检测：
+    1.其他数据类型转为number数据类型
+        转换的方式：
+        a.严格转换：Number();方法如下：
+        * boolean类型的值(true/false) Number(true) ->1  Number(false) ->0
+        * number类型的值是简单的传入和传出
+        * null --Number(null)->0
+         Number([])->0
+         Number({})->NaN
+        * undefined -- Number(undefined)-->NaN
+         * ""  -- Number("") --> 0
+        * 其他的字符串,只有有一个字符不是数字(除.以外),结果就是NaN
+
+        b.非严格转换：parseInt()-整数/parseFloat();-浮点数、小数
+            parseInt  和parseFloat 将字符串类型转换成数类型的
+            parseInt() 是将字符串的整数部分提取出来，从前到后只提取整数部分，碰到非数值就停止，如果先碰到非数类型的就会返回NaN
+            parseFloat() 与上边原则一样，但是除了将整数部分提取出来，还会将小数部分提取出来
+
+        isNaN():1)首先通过Number()严格转换 2）判断是不是数字类型
+        规律：
+        1.boolean布尔值 true:1; false:0;
+        2.null/undefined null->0; undefined:NaN;
+        3.[]->toString:''->0;
+4.基本数据类型之数据类型之String字符串类型
+    1）双引号或者单引号包起来的就是字符串,单引号或者双引号必须是成对出现的,不成对出现就会报错!
+    2） +在字符串里不再表示运算符，而是表示拼接的意思,（拼接的时候会自动把其他的数据类型转换成字符串类型）
+    3）如何在字符串里表示双引号或者单引号？
+        var str2="aaa'bbb'";//在双引号里可以单独的用单引号，但是双引号里不能使用双引号
+        console.log(str2);//在单引号里用双引号也是可以的，但是在单引号里不能用单引号
+    4） //******// \用来表示转义字符：\\-->\  \\-->\"-->"   \'-->'    \r（回车）  \n(换行）  \t（制表符）
+    5）字符串常用的11种方法
+        1.通过索引来查找对应的字符或者编码
+             1）charAt(下标):通过下标找到对应的字符
+             2）charCodeAt(下标):通过下标找到对应的ASCII值；
+        2.通过字符串找到对应的下标
+             3）indexOf('str'):通过字符串从前往后找到对应的下标
+             4）lastIndexOf('str'):从后往前找，参数：字符串
+                indexOf,lastIndexOf 如果找不到返回的都是-1;
+        3.字符串截取
+             5）substr(n,m) ->n:索引 m:个数
+             6）substring(n,m) ->从第n个索引开始，截取到第m个；（包前不包后）(可以反着写）如果有负数的话，默认是从索引0开始截取
+             7）slice(-4)->用法同substring相同，但是他可以取负值；（索引从后往前一次是-1，-2，-3.....）
+                例如：
+                var str="1234567";
+                console.log(str.slice(-4,-1));-->456
+        4.字符串拆分-》字符串转数组
+             8）split('切分符')-->是以什么进行切分
+                例如：
+                    var str="1@2@3@4567";
+                    console.log(str.split("@"));--》["1", "2", "3", "4567"]
+        5.字符串替换
+             9）replace(被替换的，替换他的)-->不用正则的话只替换一个
+                例如：
+                var str="1232663664567";
+                console.log(str.replace(6,"d"));--》1232d63664567
+                var str="1232663664567";
+                console.log(str.replace(/6/g,"d"));-->1232dd3dd45d7
+                后边可以是回调函数--》str.replace(/^\d/,function(){})
+        6.大小写转换
+            toUpperCase();-转成大写
+            toLowerCase();-转成小写
+
+        扩展：localeCompare
+5.基本数据类型之布尔数据类型
+    1）其他数据类型转为boolean数据类型
+        转换方式：Boolean(); !; !!; if(运算表达式)； if(单独的值)；
+        如果前面有！，一定会首先进行布尔值的转换（比运算符优先级高）
+********五个返回false的情况：0,NaN,null,undefined,"" 转换成boolean类型时结果是false,其他的全部是true;
+    2）常见思考题：[]=![]  []=false  ![]=false  []==[]  地址和地址比较为false
+        ![]->false
+        if('13px'*3){//-,*,/ 减号和乘法 除法只有一个功能就是进行数学运算；-》NaN
+            alert(true)
+            }else{
+            alert(false)
+        }
+        if('13px'+3){//+  加法两个作用：1.字符串拼接 2.数学运算
+            alert(true)
+            }else{
+            alert(false)
+        }
+        规律：除了NaN,0,null,undefined,''为false，其他都为true；
+    3）两个值的比较规则（==,===）==:会隐式类型转换，比较的只是“值”； ===:不仅比较“值”，还要比较“数据类型”
+        1）object==object 他们比较的是地址,地址不同两个对象就不同 []==[]-》false；
+        2) object==string 都转成字符串   []==''-》true；
+        3）object==number 都转成数字   []==0->true;
+        4) object==boolean 都转成数字  []==false-》true ; ![]==false->true;
+        5)string==number   都转成数字 ''==0->true;
+        6)string==boolean  都转成数字  ''==false-》true；
+        7）number==boolean 都转成数字  2==true->false;
+        8)null==undefined->true  null===undefined->false;
+        null和undefined他们和其他任何值比较都不相等  但是和自己和对方相等
+        9）NaN==NaN NaN跟任何值比较都不相等，包括他自己比较
+6.null和undefined*********
+        在JavaScript编程实践中，如果一个变量以后要用到，现在就要定义，那我们就主动给它一个null值，虽然只定义不赋值也没有什么错误。
+    比如以后在动画中要定义一个定时器变量，就是：var timer=null;就表示这个timer是提前定义的，以后要用，当然你也可以不给它这个null，
+    就是直接写一个var timer;这样也没问题，不会有什么语法错误，它的值自动就是undefined，也表示一个不存在的值的。主动把null赋给timer，就是为了强调这个变量是提前；预留出来的。
+        判断JavaScript中一些对象的属性时，也遵循这个原则。
+        如果一个对象的属性根本就没定义过，则它是undefined；如果是null，则表示这是个本来就有的属性，只是没有值。
+        比如说一个网页元素的parentNode这个属性，表示是这个网页元素的父节点，这是个系统规定的（法定的）的法性，
+    一般情况这个属性的值是一个网页元素，但它的值也有为null的时候，比如:document.parentNode，这个就是null，
+    因为它有parentNode这个属性，只不过它是顶级元素，不存父节点而已。但是它不是undefined，如果是undefined表示这个属性根本就没有。
+    特别注意：如果是一个方法或者变量未定义，但是你调用了，浏览器会报错，而不是undefined.属性未定义，是undefined。
+    定义（声明）过。
+        这个在调试JavaScript时非常有用，如果你调试某一个属性的值是undefined，那说明你可能把这个属性写错了，除非你在
+    直接读取一个你从来没有操作过的自定义属性。就是说要为以后用的属性主动赋值为null，这样就标识了这个属性是事先声明并预留以后用的。
+    当然，你也可以不做这样的事，这不是什么语法错误，它只是区分此属性是否是事先声明过的一个标识而已。建议大家有这个良好的编程习惯！
+    null出现的情况:
+        1.设置一个变量，后期需要使用，那么前期设置成null;
+        2.在JS内存释放中，释放一个堆内存，可以让其值变为null;
+        3.我们通过DOM中提供的属性和方法获取页面中的某一个元素标签，如果当前的标签不存在，获取的结果是null，而不是undefined
+        4.在正则exec/字符串的match捕获中,如果当前要捕获的字符串和正则不匹配的话，捕获的结果是null。
+    undefined出现的情况：
+        1.在JS中预解释的时候，只声明，未定义，默认的值是undefined
+        2.在一个函数中没有return或者return后边啥也没写，默认的返回值也是undefined
+        3.定义了形参，但是执行的时候没有传值的话，那么形参默认值也是undefined
+        4.获取一个对象的属性名和属性值，如果当前的这个属性名不存在，属性值默认是undefined
+
+8.引用数据类型之对象类型（包括[],new Date(); /^\d+$/,{}，Math等）小写
+        Math:不是一个类,它只是一个对象,对象中存储了操作了数学/数字的常用方法
+            console.log(Array instanceof Function);-->true 说明Array是个类
+            console.log(Math instanceof Function);-->false  说明Math不是个类
+      1.Math:数学对象  用来处理数字的
+        Math常用方法：
+        Math.round(2.1) 四舍五入
+        Math.floor(2.6) 向下取整
+        Math.ceil(2.1) 向上取整
+        Math.abs(-100) 绝对值
+        Math.sqrt(16) 开平方
+        Math.pow(2,3) 幂次方
+        Math.max(2,18,1,90) 一组数据中找到最大值
+        -->单个数据分别写进去，但是实际上很多时候是求数组中的最大值
+        找到数组中最大值：
+            var ary=[1,23,22,11,2];
+            console.log(Math.max.apply(null,ary));--》this不写，所以写null
+        Math.min(2,18,1,90) 一组数据中找到最小值
+        Math.random() 从0-1（不包含1）的随机小数
+        随机数公式：Math.random()*(m-n)+n;
+        不要最大值：Math.floor(Math.random()*(m-n)+n);
+        可能会有最大值：Math.round(Math.random()*(m-n)+n);
+     【类数组】
+特别解释一下相关的类数组：类数组是和数组的样式一样，有索引，有length，但是没有数组的属性和方法，
+        比如function自带的arguments和DOM中获取到的元素集合。
+        DOM中获取到的元素集合:
+        具体分为：
+                1.HTMLCollection:-->元素集合类的实例，也是一个类数组集合
+                2.NodeList-->节点集合，也是类数组
+        将类数组转化为数组：Array.prototype.slice.call(likeary);但是在ie6-8不支持
+        【特别注意：】（元素集合和节点结合都不兼容，但是arguments借用数组方法是不存在任何兼容性问题的）
+
+
+    引用数据类型(对象类型)是复合数据类型的载体,可以描述多个特征
+    对象数据类型的存在多对键值对(属性名和属性值),每个键值对之间以逗号隔开。在普通对象里,属性名可以写双引号,也可以不写
+    1）创建方式：
+       a. var obj = {"width":"10px",gender:true,age:18,fn:function(){},0:"aa",1:"bb",2:"cc"};//字面量的方式
+       b.var obj = new Object()//通过实例的方式创建
+       操作对象:增,删,改,查
+     2)获取对象属性值的两种方式
+          obj["width"]  obj.width
+**********console.log(obj['aa']);//前提:[]里写了引号的,读取属性的时候,发现这个属性名不存在,则返回undefined;
+                                                                       （注意，属性不存在返回undefined）
+           console.log(obj[aa]);//如果[]里不加引号,则表示变量,如果变量不存在则会报错
+      3）增删改查删除属性
+        假删除 obj.width = null; obj["width"] = null;
+        真删除 delete obj["width"];  delete  obj.width;
+      4）细节知识点：
+       a.属性名可以是数字，1.获取的时候，只能通过[]的方式,不能通过.的方式,[]里的引号可写可不写,一般情况下不写。
+                       2.遍历的时候，先打印出属性名是数字的（并大小顺序）,其他的再按照字母表中顺序排列
+       b.遍历对象中的属性名和属性值（for  in)
+    在obj这个对象里声明了一个变量attr(attribute),这个变量名attr是可以随便起的,一般情况我们写成attr或者key
+    attr这个用来保存obj这个对象里每一个属性名的
+    var obj = {"width":"10px",height:"20px",gender:true,age:18,fn:function(){},0:"aa",1:"bb",2:"cc"};
+    for(var attr in obj){
+    console.log(attr+":"+obj[attr]);}//attr表示属性名  obj[attr]表示属性值
+9.引用数据类型之函数
+    //JS中的内置类:
+    //->Number、String、Boolean、(Null、Undefined)、Object、Function、Array、RegExp、Date
+        --->这些都是类，属于函数（没有Math-->Math只是一个对象)
+Function
+    函数：实名函数，匿名函数
+    1）函数包含两部分：定义和调用
+        函数定义的步骤：
+        a.开辟一个空间地址
+        b.把函数体中的JS代码做为字符串存在这个空间中
+        c.把空间地址赋值给函数名；
+       函数调用的步骤：
+        a.开辟一个新的私有作用域
+        b.把以前空间中存的字符串类型的代码做为JS代码来执行；
+    2）函数封装：对于相同的功能进行封装，以后再用此功能，只需要调用即可（避免了大量冗余代码）；
+        1.html代码结构一致：在父级下获取所有元素
+        2.主要程序的实现；
+        3.传参
+    3）参数：两种
+        参数的第一层理解；
+        1.形参：如果定义了形参，但是没有传值得话-undefined；
+        2.arguments：函数内置的参数机制；不管调用时是否传值，函数都有arguments;接收实参，传的实参接收到arguments的数组里
+    arguments不是数组，只是类数组；
+    length属性：代表传的参数的个数；
+    callee方法：代表函数本身这个整体；
+    参数第二层理解：
+    参数可以是我们学过的所有数据类型；
+    4）返回值 return
+        1.函数返回值：
+        undefined：1.没有写return 2.写了return但没有返回值；
+        return后面的返回值，也可以是任意数据类型；
+        关于函数返回值，在外面我们可以把它保存到一个变量里；方便以后的操作；
+        2.阻断函数里面代码的执行；可以让函数里面的代码执行到我们想要的位置，然后停止；
+    5）让函数内部的值如何让外部接收，两种方式：
+        a:return
+        b:利用window属性，在函数内部给window添加属性，进行操作等，在外边就可以直接用。
+    6）闭包：函数执行的时候，会形成一个新的私有作用域，保护里面的变量不受外界的干扰，函数这种保护机制，叫做闭包；
+。。。。。。。。。以上都是实名函数
+    7）常见的匿名函数：
+        a.函数表达式；把函数定义部分做为值赋值给变量or元素事件行为；
+        b.自执行函数:函数定义和调用一起完成
+    自执行函数的写法：
+    (function(){})();
+    ~function(){}();
+    !function(){}();
+    +function(){}();
+    -function(){}();
+    8）函数的三种角色：（函数在整个JS中是最复杂也是最重要的知识）（具体相关课件可看正式课第二周第一天函数三种角色）
+        1.普通函数：当方法运行的时候，形成一个私有的作用域，1.形参赋值 2.预解释 3.代码从上往下执行
+        2.构造函数（类）：new+函数名执行，通过这种方式运行的函数就成为构造函数，构造函数里有自己的原型对象（prototype），构造函数里
+            通过this.xx=xx设置的属性都是实例的私有属性，prototype上的都是公有的。this表示某一个实例，hasOwnProperty可以判断是私有属性还是公有的属性
+        3.函数也是对象，和普通对象obj={}一样，都有自己私有的属性和方法，公有的属性和方法。
+        只是函数比较特殊，因此单独独立成Function类型  fn instanceof Object-->true  可以像对象一样设置自己属性和值，这三种角色之间
+        相互独立，没有关系
+*******所有的函数(类）都是Function类的实例，所以所有的函数同时也是对象数据类型的  Object类也是Function
+所有的对象都是Object类的实例     fn instanceof Object   Fn instanceof Object
+*******Function
+        函数本身具有的属性：
+        length:0  形参的个数
+        name:"Fn"  函数名属性
+        prototype:（本身是个爹，指向原型）类的原型，在原型上定义的方法都是这个类实例的公有方法
+        __proto__：（函数本身也是个儿子，指向所属类Function的原型）把函数当做普通的对象，指向Function这个类的原型
+
+        *****函数在整个JS中是最复杂也是最重要的知识：
+        1.一个函数存在多面性
+            1）“普通函数”：它本身就是一个普通的函数，执行的时候形成一个私有作用域（闭包），形参赋值，预解释，
+        代码执行，执行完成后栈内存销毁和不销毁
+            2）“类”：它有自己的实例，也有一个叫prototype的属性，指向自己的原型。
+            3）“普通对象”：和var obj={}一样，就是一个普通的对象，他作为对象可以有一些自己的私有属性，
+            也可以通过__proto__找到Function.prototype
+            然而这三者之间是没有必然的关系的
+    9）回调函数：--》具体可查看老师课件全日制第三天--专题-回调函数  --  视频138  139
+        把一个函数当做一个参数的值,传递给另外一个函数,在另外一个函数中,把传递进来的这个函数执行一次或者多次...
+        在一般情况下，回调函数中的THIS是window
+        常用的回调函数：sort   定时器   str.replace(/^\d/,function(){})
+        执行的时候看前边有没有点，前边没有点的话，THIS是window
+        除非手动改变：1.自己定义_this传进去  2.bind提前预处理 3.自带的比如forEach
+
+    ********->我们接下来可以在A函数中尽情的操作B函数:
+            //-->我可以在A函数中的任何位置执行B函数
+            //-->我们还可把B函数想执行多少次就执行多少次
+            //-->我们不仅仅可以执行B函数,还可以给B函数传递对应的参数值
+            //-->不仅仅可以传递参数值,还可以把回调函数中的THIS指向进行修改(默认的THIS->window)
+            //-->不仅仅可以改变this,还可以接受到回调函数执行的返回值
+        例如：
+                function A(callback) {
+                    //console.log(callback === B); ->true
+                            console.log("A");
+                if (typeof callback === "function") {//比较严谨的判断传进来的是否是函数
+                var total = callback.call(obj, 10, 20);
+                    console.log(total);
+                    }
+                        callback && callback(10, 20);//一般写项目这样判断就可以，逼格比较高
+
+                    function B(num1, num2) {
+                        console.log(num1 + num2, this);
+                       return num1 + num2;
+                        }
+<script>
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+

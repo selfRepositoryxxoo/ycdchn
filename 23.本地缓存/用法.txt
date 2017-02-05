@@ -1,0 +1,2 @@
+<html  manifest = "cache.appcache">
+  在html头部写上   cache.appcache  里面放要缓存的东西  路径为相对于此文件的相对路径   302

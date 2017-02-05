@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body></body>
+</html>
+<script>
+    var str="2015-3-5  12:12:3";
+    var reg=/^(\d{4})[-/](\d{1,2})[-/](\d{1,2}) +(\d{1,2}):(\d{1,2}):(\d{1,2})$/;
+    var ary=[];
+    str=str.replace(reg,function(){
+        ary=[].slice.call(arguments).slice(1,7)
+    });
+    var resStr="{0}年{1}月{2}日{3}时{4}分{5}秒";
+    var reg=/{(\d)}/g;
+    resStr= resStr.replace(reg,function(){
+        var val=arguments[1],res=ary[val];
+        res.length===1?res="0"+res:void 0;
+        return res
+    });
+    console.log(resStr)
+
+
+
+</script>
+
+
+
+

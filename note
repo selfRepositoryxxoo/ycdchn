@@ -1,0 +1,27 @@
+dblclick双击  mouseover 滑入  mouseout滑出。  mouseenter进入。mousewheel onscroll  onload  resize（当前浏览器屏幕大小发生改变） keydown  keyup keypress  blur(文本框失去焦点)focus（文本框获得焦点）
+touch  移动端。还有一个?
+但是在IE下6~8中浏览器中并没有给方法传递事件对象;
+鼠标事件对象：用来存储本次鼠标相关信息的的一个对象，他是mouseEvent这个类的实例；
+渲染页面：通过代码来渲染，html和css渲染，
+a标签  URL页面的跳转。锚地点位。#target
+a:hover兼容浏览所有浏览器。
+我们平时用a标签处理事情，不一定非要跳转或者定位。有很多时候仅仅是当做他一个普通的按钮，利用：hover这个伪类，是兼容所有浏览器的原理实现一些样式的操作。
+阻止a标签的默认行为，
+<a href="javascript:;"></a>
+<a href="javascript:void 0;"></a>
+var a=void 0;//undefined
+焦点事件focus  blur
+文本的默认行为，就是自动记录就可以使用默认行为;
+事件冒泡传播：当前元素的某个行为被触发，那么他所有的父级元素的行为都会被触发。
+ //->onmouseenter/onmouseover的区别:
+    //1)onmouseenter默认阻止了事件的冒泡传播,子元素的onmouseenter事件被触发,父级元素的相关事件不会被触发;但是onmouseover存在冒泡传播;
+    //2)红盒子是绿盒子的子元素,当鼠标从绿盒子进入红盒子,在从红盒子进入绿盒子,会重新的触发绿盒子的onmouseover事件,但是不会触发绿盒子的onmouseenter事件;
+    enter leave 是没有冒泡传播机制的
+    事件对象是记录的本次操作的相关信息，尽管绑定好几个方法，但是他们的彼此的e是相同的，因为操作一次让他们都发生了。
+
+
+
+
+
+
+

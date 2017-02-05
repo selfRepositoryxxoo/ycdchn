@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--<script type="text/javascript">
+    function haha(data){
+        console.log(data);
+    }
+</script>
+<script type="text/javascript" src="http://matchweb.sports.qq.com/kbs/calendar?callback=haha&columnId=100000"></script>-->
+
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+/*    以下都是jquery下面的jsonp
+    http://localhost:8888/1.html  在浏览器输入这个；
+            但是要同时启动8888  （1234使我们模拟的服务器给的一个端口，但是我们这个页面需要对跨域处理 想当于下面的url 只是我们这个1234需要我们自己做处理返回，返回值，下面用的人家的网址，
+            人家的网址不过已经做了处理；可以返回数据；）当然我们这个8888是我们自己设置的可以可以随时改变
+             这是在8888这个端口请求1.html这个页面同时还要请求其他的资源
+    */
+  /*      $.ajax({
+            url: "http://matchweb.sports.qq.com/kbs/calendar?columnId=100000",
+            type: "get",
+            dataType: "jsonp",
+            success: function (data) {
+                console.log(data);
+            }
+        });*/
+        //在控制台后面的Request URL:
+    //->http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&callback=jQuery111307498384476606119_1466591165577&_=1466591165578
+        //http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&callback=jQuery111301273341376522834_1466646789760&_=14666467897
+        function fn(data) {
+            console.log(data);
+        }
+        $.ajax({
+            url: "http://matchweb.sports.qq.com/kbs/calendar?columnId=100000",
+            type: "get",
+            dataType: "jsonp",
+            jsonpCallback: "cc",//这个名字是随便的  好像也不行
+            jsonp: "callback"//假如这个地方改成a是不可以的 好像是可以拿到，但是不行
+        });
+    //->http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&callback=fn&_=1466591300786
+   //http://matchweb.sports.qq.com/kbs/calendar?columnId=100000&callback=fn&_=1466646695472
+
+  /*  function fn(data) {
+        console.log(data);
+    }
+    $.ajax({
+        //这个必须是本机的IP地址   127.0.0.1 为什么需要这个呢因为是这个页面是建立在我们自己的服务器上
+        url: "http://127.0.0.1:12345/test",
+        type: "get",
+        dataType: "jsonp",
+        jsonpCallback: "fn",
+        jsonp: "a"
+    });*/
+    //->http://192.168.0.7:1234/test?a=fn&_=1466591442642
+</script>
+</body>
+</html>

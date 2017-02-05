@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #tab{
+            width: 50px;
+            height: 60px;
+            border: 2px solid red;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="tab">天使的翅膀天使的翅膀天使的翅膀天使的翅膀天使的</div>
+</body>
+</html>
+<script>
+    var oDiv=document.getElementById("tab");
+    var flag=1;
+    ~function(){
+       var val=oDiv.scrollTop;
+        //console.log(val)
+        oDiv.scrollTop+=flag;
+       // console.log(oDiv.scrollTop)
+        if(val==oDiv.scrollTop){
+            flag*=-1;
+        }
+        timer=window.setTimeout(arguments.callee,10)
+    }()
+
+
+</script>
+

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            background: red;
+            cursor: move;
+            -webkit-user-select: none;
+        }
+        #div4{
+            width: 100px;
+            height: 100px;
+            left: 200px;
+            top: 200px;
+        }
+        #div4 img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="background: blue;top: 0;left: 0"></div>
+<div id="div2" style="background: darkcyan;top: 100px;left: 0"></div>
+<div id="div3" style="background: darkorange;top: 100px;left: 100px"></div>
+<div id="div4"><img src="img/1.jpg" alt=""/></div>
+</body>
+</html>
+<script type="text/javascript" src="js/event.js"></script>
+<script type="text/javascript">
+
+    var oBox=document.getElementsByTagName("div");
+    for(var i=0;i<oBox.length;i++){
+        on(oBox[i],"mousedown",down);
+    }
+    function down(e){
+        this["strX"]= e.pageX;
+        this["strY"]= e.pageY;
+        this["strL"]= this.offsetLeft;
+        this["strT"]=this.offsetTop;
+        if(this.setCapture){
+            this.setCapture();
+            on(this,"mousemove",move);
+            on(this,"mouseup",up);
+            return
+        }
+            var _this=this;
+            this.MOVE=function(e){//为什么没有e不行******假如没有写e的话 我们执行这个匿名函数的时候e就是down这是私有的，e就是固定的，不是我们执行move这个函数中的e，
+                //我们需要执行move的时候，需要自己的鼠标事件对象。
+                move.call(_this, e)
+            };
+            this.UP=function(e){//没有加e调试
+                up.call(_this, e)
+            };
+            on(document,"mousemove",this.MOVE);
+            on(document,"mouseup",this.UP);
+        e.preventDefault();
+    }
+    function move(e){
+        this.style.left= e.pageX-this["strX"]+this["strL"]+"px";
+        this.style.top=e.pageY-this["strY"]+this["strT"]+"px"
+    }
+    function up(e){
+        if(this.releaseCapture){
+            this.releaseCapture();
+            off(this,"mousemove",move);
+            off(this,"mouseup",up);
+            return
+        }
+        off(document,"mousemove",this.MOVE);
+        off(document,"mouseup",this.UP)
+    }
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

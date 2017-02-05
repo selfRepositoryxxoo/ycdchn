@@ -1,0 +1,13 @@
+可以有纯面向对象的弹性动画，但是没有这个必要，我们的重点在于
+1.在拖拽的基础上+fly+drop形成弹性动画
+2.在拖拽的面向对象的基础上+利用设计模式+形成弹性动画；（有内置事件的基础上）；
+3.在拖拽的面向对象的基础上+利用设计模式+形成弹性动画；（自定义事件没有内置事件）；
+移动端的拖拽事件；
+一共有三个：touchstart touchmove touchend；
+通过二级事件增加
+通过forEach.call(eles,function(){});循环遍历每个数组
+手指的集合是changedTouches;
+谨记：移动端的拖拽不需要定位;
+谨记：offsetLeft是包含margin的 但是定位是不包含 margin的offset+margin的
+position是不包含margin和padding的 offsetLeft是包含的
+定位是对内容而言

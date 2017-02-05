@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" id="search"/><input type="button" id="button" value="baidu"/>
+<ul>
+</ul>
+</body>
+</html>
+<script src="jquery-1.11.3.js"></script>
+<script>
+    var button = $('#button');
+    var search = $('#search');
+    var ul = $('ul');
+    console.log(ul)
+    button.on('click',function(){
+        var val=search.val();
+        console.log(val);
+        if(val){
+            $.ajax({
+                url:'http://suggestion.baidu.com/su',
+                data:{dd:val},
+                dataType:'jsonp',
+                jsonp:'cb',//记住服务器人家规定什么 我们就的告诉人家 你教什么
+                //jquery是不能使用callback 因为人家提供的不是callback
+                //jsonpCallback是函数名
+                //他妹的  地址放在前面和后面都是一样的  假如往其他的服务器发送数据的话，必须人家肯定规定好了jsonp
+               // jsonp必须是人家的规定好的,*******************88888
+              //  http://suggestion.baidu.com/su?cb=yy&wd=%E5%8C%97%E4%BA%AC&_=1466753153750
+                jsonpCallback:'yy',
+                success:function(data){
+                    console.log(data);
+                    if(!data){
+                        return
+                    }
+                    var con=data.s;
+                    console.log(con);
+                    var fragment=document.createDocumentFragment();
+                    for(var i=0;i<con.length;i++){
+                        var li=document.createElement('li');
+                        li.innerHTML=con[i];
+                        fragment.appendChild(li);
+                        console.log(fragment)
+                    }
+                    ul.html(fragment);
+                }
+            })
+        }
+    })
+
+</script>

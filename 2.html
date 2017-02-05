@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="test">
+    <li node-type="1">惠普金融</li>
+    <li node-type="2">爱金钱</li>
+    <li node-type="3">硅谷中心</li>
+</ul>
+</body>
+</html>
+<script type="text/javascript">
+    var oUl=document.getElementById('test');
+    oUl.onclick=function(e){
+        e=e||window.event;
+        var target= e.target|| e.srcElement,
+                tarName=target.tagName.toUpperCase(),
+                data=target.getAttribute('node-type');
+        console.log(data)
+    }
+
+
+
+
+</script>

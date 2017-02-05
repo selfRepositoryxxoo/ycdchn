@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+<input type="tel" id="tel"/>
+<input type="button" value="查询手机号"/>
+
+<div id="info"></div>
+</body>
+</html>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var tel = $('#tel');
+        var btn = $('#btn');
+        var info = $("#info");
+        console.log(btn);
+        btn.click(function () {
+            console.log("ok");
+            var val = tel.val();
+            if (val) {
+                $.ajax({
+                    url: 'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm',
+                    data: {tel: val},
+                    dataType: 'jsonp',
+                    jsonp: "callback",
+                    success: function (data) {
+                        info.html(JSON.stringify(data))
+                    }
+                })
+            }
+        })
+    });
+    /*
+     $(document).onread(function(){
+
+     })*/
+</script>
+

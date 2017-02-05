@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>layPage demo</title>
+<meta name="keywords" content="分页插件,ajax分页,异步分页">
+<meta name="description" content="laypage是一款多功能的js分页组件，主要应用于前端页面Ajax普通分页以及信息流加载，并且可无缝迁移至Node.js平台。laypage不依赖于任何第三方库，直接拿来用即可，它的接口继承了layui系列组件的一贯简洁，极易上手。那么，从现在开始，将分页的任务交给laypage吧！">
+</head>
+<link rel="stylesheet" href="laypage/skin/laypage.css"/>
+<body>
+<a href="">狼牙棒 电视原声带</a>
+<ul id="biuuu_city_list"></ul>
+
+<div id="biuuu_city"></div>
+
+
+<script src="laypage/laypage.js"></script>
+<script>
+
+//测试数据
+var data = [
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧1',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧2',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧3',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧4',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5',
+    '刘慧5'
+];
+
+var nums = 5; //每页出现的数量
+var pages = Math.ceil(data.length/nums); //得到总页数
+
+var thisDate = function(curr){
+    console.log(curr)//这个就是第几页
+    //此处只是演示，实际场景通常是返回已经当前页已经分组好的数据
+    var str = '', last = curr*nums - 1;//19
+    last = last >= data.length ? (data.length-1) : last;//19
+    //下面是把 数据放起来
+    for(var i = (curr*nums - nums); i <= last; i++){
+        str += '<li>'+ data[i] +'</li>';
+    }
+    return str;
+};
+
+//调用分页
+var biuuu_city=document.getElementById('biuuu_city')
+laypage({
+    cont: biuuu_city,
+    pages: pages,//这个是总页数
+    jump: function(obj){//点击之后 回调
+        console.log(obj);
+        document.getElementById('biuuu_city_list').innerHTML = thisDate(obj.curr);
+    }
+});
+    Math.ceil()
+
+</script>
+
+
+</body>
+</html>

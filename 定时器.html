@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body></body>
+</html>
+<script>
+  /*//1.
+   var time1=window.setTimeout(function(){
+        console.log("我是第一个定时器")
+    },1000);
+    console.log(time1);//1
+    var time2=window.setTimeout(function(){
+        console.log("我是第二个定时器")
+    },1000);
+    console.log(time2);//2
+    var time3=window.setInterval(function(){
+        console.log("我是第三个定时器")
+    },1000);
+    console.log(time3)//3
+    window.clearTimeout(1)//数字代表的是第几个定时器
+    //设置可以不一样，但是清除的话，用哪个一个都行*/
+//2
+  /*//setInterval来实现多次运动
+    var n=0;
+    var timer=window.setInterval(function() {
+        n++;
+        console.log(n);
+        if (n === 5) {
+            window.clearInterval(timer)
+        }
+    },1000);*/
+
+    //setTimerout来实现多次运动
+      var timer = null;
+      var n = 0;
+      function move() {
+          window.clearTimeout(timer);
+          n++;
+          console.log(n);
+          if (n === 5) {
+              return
+          }//每一次执行完之后就会设置一个新的定时器，开了一个之后
+          // ，前面的那就不管了，所以使用每次进来先清除
+          timer = window.setTimeout(move, 1000)
+      }
+      move()
+
+
+
+
+
+
+</script>

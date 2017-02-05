@@ -1,0 +1,13 @@
+
+以下都得先开启server才可以请求
+
+//假如只需要看看有没有地址就可以  在浏览器中直接输入 http://localhost/getData?n=4
+    //假如端口换了  就得改 是80的话就不用写了；
+    //http://localhost:81/getData?n=4
+
+
+    //只需要在浏览器中http://localhost：80/index.html
+
+
+
+

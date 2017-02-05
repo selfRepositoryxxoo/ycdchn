@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <link charset="utf-8" type="text/css" rel="stylesheet" href="css/reset.css"/>
+    <style type="text/css">
+
+        body, html {
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            left: 0; /*必须设置*/
+            height: 100%;
+            -webkit-transition: all .5s linear 0s;
+            -moz-transition: all .5s linear 0s;
+            -ms-transition: all .5s linear 0s;
+            -o-transition: all .5s linear 0s;
+            transition: all .5s linear 0s;
+
+        }
+
+        .con {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        /*--过渡动画--*/
+
+        .rightMenu {
+            position: absolute;
+            right: -50%;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            border-left: 1px solid #ddd;
+            background: #fff;
+        }
+
+        @media all and (max-width: 770px) {
+            .rightMenu {
+                right: -100%;
+                height: 100%;
+            }
+        }
+
+        .nav {
+            width: 100%;
+            height: 36px;
+            background: #5D5D58;
+        }
+
+        .nav ul {
+            margin: 0 4%;
+            height: 100%;
+        }
+
+        .nav ul li {
+            float: left;
+            height: 100%;
+        }
+
+        .nav ul li a {
+            display: block;
+            padding: 0 15px;
+            line-height: 36px;
+            text-align: center;
+            height: 100%;
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        .nav ul li.bg a {
+            background: #fff;
+            color: #333;
+        }
+
+        .nav ul li:hover {
+            background: #333;
+        }
+
+        /*------header start---*/
+        .header {
+            height: 80px;
+            background: #fff;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .header div {
+            margin: 0 4%;
+        }
+
+        .log {
+            float: left;
+            width: 167px;
+            height: 40px;
+            margin-top: 20px;
+        }
+
+        .login {
+            float: right;
+            width: 342px;
+            height: 56px;
+            margin-top: 12px;
+        }
+
+        .headerSmall {
+            cursor: pointer;
+            display: none;
+            height: 60px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .headerSmall div {
+            margin: 0 15px;
+        }
+
+        .headerSmall .logo {
+            float: left;
+            width: 167px;
+            height: 40px;
+            margin-top: 10px;
+        }
+
+        .search, .menu {
+            float: right;
+        }
+
+        .search {
+            margin-top: 19px;
+            width: 23px;
+            height: 22px;
+        }
+
+        .menu {
+            margin: 22.5px 0 0 20px;
+            width: 20px;
+            height: 15px;
+
+        }
+
+        /*--
+        ->媒体设备：@media screen(包含pc和手机) @media print
+        -->媒体特征：
+        ---*/
+        @media screen and (max-width: 960px) {
+            /*--当前的屏幕是小于等于960px--*/
+            .nav, .header {
+                display: none;
+            }
+
+            .headerSmall {
+                display: block;
+            }
+        }
+
+        .rightMenu h2 {
+            height: 38px;
+            padding: 10px 20px 0;
+            line-height: 38px;
+            border-bottom: 2px solid #333399;
+        }
+
+        .rightMenu h2 span, .rightMenu h2 i {
+            display: block;
+            height: 100%;
+            line-height: 38px;
+        }
+
+        .rightMenu h2 span {
+            float: left;
+            color: red;
+            font-weight: 400;
+        }
+
+        .rightMenu h2 i {
+            float: right;
+            margin-top: 12px;
+            width: 15px;
+            height: 14px;
+            background: url("img/CBG_moblie_nav_005.png") no-repeat;
+            cursor: pointer;
+        }
+        .rightMenu li{
+            position: relative;
+            height: 20px;
+            padding: 9px 20px;
+            line-height: 28px;
+            font-size: 16px;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .rightMenu li i{
+          float: right;
+            margin-top: 4px;
+            width: 10px;
+            height: 14px;
+            background: url("img/CBG_moblie_nav_004.png") no-repeat;
+            cursor: pointer;
+        }
+        .rightMenu li:hover{
+            background: #ececff;
+        }
+        .pagelist{
+            margin: 0 4%;
+        }
+        .pagelist li{
+            margin-top: 20px;
+            padding-right:3.333% ;
+            float: left;
+            width: 30%;
+        }
+        .pagelist li img{
+            width: 100%;
+            height: 226px;/*高度固定死响应式布局*/
+
+        }
+        .pagelist li .title{
+            margin: 12px 0 6px 0;
+            height: 28px;
+            line-height: 28px;
+            font-size: 18px;
+            text-overflow: ellipsis;;
+            white-space: nowrap;/*强制不换行*/
+            overflow: hidden;
+        }
+        .pagelist li .desc{
+            font-size: 14px;
+            line-height: 25px;
+        }
+    </style>
+</head>
+<body>
+<section class="box" id="box">
+    <div class="con">
+        <div class="top">
+            <nav class="nav">
+                <ul>
+                    <li class="bg"><a href="#">首页</a></li>
+                    <li><a href="#">个人与家庭用户</a></li>
+                    <li><a href="#">企业用户</a></li>
+                </ul>
+            </nav>
+            <header class="header">
+                <div>
+                    <img src="img/logo.png" class="log"/>
+                    <img src="img/top-lan.jpg" class="login"/>
+                </div>
+            </header>
+            <!--当低于宽度低于960px的时候我们展示headersmall-->
+            <header class="headerSmall">
+                <div>
+                    <img src="img/logo.png" class="logo"/>
+                    <img src="img/menu.png" class="menu" id="navMenu"/>
+                    <img src="img/search.png" class="search"/>
+                </div>
+            </header>
+        </div>
+        <!--产品列表-->
+        <ul class="pagelist clear" id="pagelist">
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+            <li><img src="img/99.jpg" alt=""/>
+                <p class="title">科技之美</p>
+                <p class="desc">智能的交通、畅捷的物流、丰富的资讯……科技让生活如此美妙。在我们身边，科技之美无处不在。</p>
+            </li>
+        </ul>
+    </div>
+    <div class="rightMenu" id="rightMenu">
+        <h2>
+            <span>首页</span>
+            <i id="rightMenuclass"></i>
+        </h2>
+        <ul>
+            <li>个人家庭用户<i></i></li>
+            <li>个人家庭用户<i></i></li>
+            <li>个人家庭用户<i></i></li>
+            <li>个人家庭用户<i></i></li>
+            <li>个人家庭用户<i></i></li>
+            <li>个人家庭用户<i></i></li>
+            <li>个人家庭用户<i></i></li>
+        </ul>
+
+
+    </div>
+</section>
+</body>
+</html>
+<script charset="utf-8" src="js/fastClick.js"></script>
+<script>
+    var myFsat=FastClick.attach(document.body);
+    var rightMenu = document.getElementById('rightMenu');
+    var navMenu = document.getElementById('navMenu');
+    var box = document.getElementById('box');
+    var rightMenuclass=document.getElementById('rightMenuclass');
+    rightMenuclass.onclick=function(){
+        box.style.left = '0';
+        navMenu.flag = false;
+        rightMenu.style.boxShadow = ''
+    };
+
+    navMenu.onclick = function () {
+        //alert(0)
+        var winW = document.documentElement.clientWidth || document.body.clientWidth;
+        if (this.flag) {
+            box.style.left = '0';
+            this.flag = false;
+            rightMenu.style.boxShadow = '';
+            return
+        }
+        if (winW < 770) {
+
+            box.style.left = '-100%';
+            return;
+        }
+        box.style.left = '-50%';
+        rightMenu.style.boxShadow = '-5px 0 10px 0 #ddd';
+        this.flag = true;
+    };
+
+  /*  /!*--控制页面中的进行适配---*!/
+    var pagelist=document.getElementById('pagelist'),
+            imglist=pagelist.getElementsByTagName('li');
+    function changeImgHeight(){
+        var scale=360/284;
+        for(var i=0;i<imglist.length;i++){
+            var curImg=imglist[i];
+
+        }
+    }
+    function getCSS(curEle,attr){
+        return window.getComputedStyle?parseFloat(window.getComputedStyle(curEle))
+    }
+*/
+
+</script>

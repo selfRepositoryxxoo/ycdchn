@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body></body>
+</html>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+<script>
+    function getCros() {
+        if (window.XDomainRequest) {//这是ie下是这个
+            return new XDomainRequest()
+        }
+        if (window.XMLHttpRequest) {//这是标准的情况下
+            var xhr = new XMLHttpRequest();
+            if (xhr.withCredentials !== void 0) {
+                return xhr
+            }
+            throw new Error('不支持cros')
+        }
+        throw new Error('不支持cros')
+    }
+    var cros = getCros();
+    cors.open('post', url, true);
+    cros.onload = function () {//onload
+        if (cors.status === 200) {
+            console.log(cors.responseText)
+        }
+    };
+    cors.send();
+    //ajax
+    $.ajax({
+        url: '',
+        data: {},
+        type: 'get',
+        dataType: 'json',
+        success: function () {
+
+        },
+        async: true
+    })
+    //jsonp
+    $.ajax({
+        url: '',
+        data: {},
+        type: 'get',
+        dataType: 'jsonp',
+        jsonp: 'cb',
+        jsonpCallback: 'callback',
+        success: function (data) {
+            console.log(data)
+        },
+        error: function () {
+        }
+    })
+    //cros
+    $.ajax({
+        url: '',
+        data: {},
+        type: 'post',
+        dataType: 'json',//text,
+        crossDomain: true,
+        success: function (data) {
+            console.log(data)
+        },
+        error: function () {
+
+        }
+    })
+
+
+</script>
+

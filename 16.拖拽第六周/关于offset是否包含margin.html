@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+    #box{
+        width: 300px;
+        height: 300px;
+        border: 1px solid red;
+        padding: 50px;
+    }
+    #div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="box">
+    <div id="div1" style="position:absolute; margin:50px; top:100px; left:100px;"></div>
+</div>
+
+</body>
+</html>
+//position是不包含margin和padding的 offsetLeft是包含的
+<script>
+    console.log(div1.offsetLeft);
+//div1.style.left=div1.offsetLeft+"px";
+
+</script>

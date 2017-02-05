@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" id="tag" name="tag"/>
+<div id="tagdiv">
+
+    <input type="hidden"  id="hidden"/>
+</div>
+<ul id="info">
+</ul>
+</body>
+</html>
+<script>
+    var hidden=document.getElementById('hidden');
+    var tagdiv=document.getElementById('tagdiv');
+    var info=document.getElementById('info');
+    info.onclick = function (e) {
+        e || (e = window.event);
+        var target = e.target || e.srcElement;
+        //这个位置不是value  有可能是id
+        var spanvalue=target.id;
+       var span=document.createElement('span');
+        span.innerHTML=spanvalue;
+        tagdiv.appendChild(span);
+        var ary=[];
+        ary.push(spanvalue);
+        var tagString=ary.join(',');
+        hidden.setAttribute('value',tagString)
+    };
+    var tag=document.getElementsByName('tag')[0];
+    $('.tag').css({
+        'position':'relative'
+    });
+
+    var xiao=function(){
+        console.log('xiaohong')
+        var val=document.getElementsByName('tag')[0].value;
+        console.log(val)
+        $.ajax({
+            url:'',
+            data:val,
+            type:'get',
+            success:function(data){
+                //data是什么
+                info.innerHTML = '';
+                var fragment = document.createDocumentFragment();
+                for (var i = 0; i < list.length; i++) {
+                    var li = document.createElement("li");
+                    li.innerHTML = list[i];
+                    //设置每个艺人的id 为了能在后面获取
+                    /*    li.setAttribute('id',);*/
+                    fragment.appendChild(li)
+                }
+                info.appendChild(fragment)
+            }
+        })
+    }
+
+    tag.addEventListener('keyup',xiao,false)
+
+
+
+</script>
+<script></script>

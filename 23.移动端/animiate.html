@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <style type="text/css">
+        body, html {
+            overflow: hidden;
+            /*----处理滚动条出现---*/
+        }
+
+        .box {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: auto;
+            width: 200px;
+            height: 200px;
+            background: #ff6600;
+            background: -webkit-radial-gradient(at right top, orange, #6699cc);
+            /*---------------必须加下面这个否则不行-------------*/
+            background: radial-gradient(at right top, orange, #6699cc);
+            background: -moz-radial-gradient(at right top, orange, #6699cc);
+            background: -ms-radial-gradient(at right top, orange, #6699cc);
+            background: -o-radial-gradient(at right top, orange, #6699cc);
+            /*--------css3过度动画-------------*/
+            /* -webkit-transition: all 1s linear 0s;
+             -moz-transition: all 1s linear 0s;
+             -o-transition: all 1s linear 0s;
+             transition: all 1s linear 0s;*/
+        }
+
+        /*
+                /!*------过度动画----*!/
+                .box:hover {
+                    -webkit-transform: scale(1.2);
+                    -moz-transform: scale(1.2);
+                    -o-transform: scale(1.2);
+                    -ms-transform: scale(1.2);
+                    transform: scale(1.2);
+                }*/
+
+        /*--------帧动画-----------*/
+        /*设置关键帧；*/
+       /* @-webkit-keyframes move {
+            from {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+            to {
+                -webkit-transform: translate(-100px, 100px);
+                transform: translate(-100px, 100px);
+            }
+        }*/
+
+        /*------触发动画执行---infinite*/
+ /*       .box {
+            -webkit-animation: move .5s linear 0;
+            animation: move .5s linear 0;
+            -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+            /!*--移动端一般都需要加这个--------*!/
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }*/
+
+        @-webkit-keyframes move {
+            0%,50%,100%{
+                -webkit-transform: translateX(0) rotate(0deg);
+                transform: translateX(0) rotate(0deg);
+            }
+
+            25%{
+                -webkit-transform: translateX(-200px) rotate(-360deg);
+                transform: translateX(-200px) rotate(-360deg);
+            }
+
+            75%{
+                -webkit-transform: translateX(200px) rotate(360deg);
+                transform: translateX(200px) rotate(360deg);
+            }
+        }
+        /*--------------------这个不写google是没有的--------------*/
+        @keyframes move {
+            0%,50%,100%{
+                -webkit-transform: translateX(0) rotate(0deg);
+                transform: translateX(0) rotate(0deg);
+            }
+
+            25%{
+                -webkit-transform: translateX(-200px) rotate(-360deg);
+                transform: translateX(-200px) rotate(-360deg);
+            }
+
+            75%{
+                -webkit-transform: translateX(200px) rotate(360deg);
+                transform: translateX(200px) rotate(360deg);
+            }
+        }
+        .box {
+            border-radius: 50%;
+            -webkit-animation: move 2s linear 0;
+            animation: move 2s linear 0;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            /*--移动端一般都需要加这个---结束的时-----*/
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box"></div>
+</body>
+</html>
+<script></script>
+
+
+
+
+
+
+
+
+
+
+
+
+

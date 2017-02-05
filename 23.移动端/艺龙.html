@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" charset="utf-8" href="css/reset.min.css">
+    <style type="text/css">
+          .boxList{
+              margin:150px auto;
+              width: 1200px;
+          }
+        .boxList li{
+            position: relative;
+            float: left;
+            height:210px;
+            width:290px;
+            margin-right:10px;
+
+        }
+          .boxList li .imgBig{
+              height:170px;
+              overflow: hidden;
+              position: relative;
+          }
+          .boxList li .imgBig img{
+              width:100%;
+              height:200px;
+              position: absolute;
+              left:0;
+              top:-10px;
+           -webkit-transition:all .3s ease-in 0s;
+              transition:all .3s ease-in 0s;
+          }
+          .boxList li  .title{
+              position: absolute;
+              left:0;
+              top:124px;
+              width:80px;
+              height:30px;
+              line-height: 30px;
+              font-size:24px;
+              color:#fff;
+              text-indent: 5px;
+          }
+        .boxList .desc{
+            padding:5px;
+            height:28px;
+            line-height:28px;
+            background: #f7f7f7;
+            font-size:14px;
+            border:1px solid #ccc;
+        }
+          .boxList li:hover .desc{
+              border-bottom:2px solid pink;
+          }
+          .boxList li:hover .imgBig img{
+              /*下面这个可以使用animation但是不好，原因是hover结束 之后会迅速回到原点，
+              所以是不好的，但是利用transform是过度动画，只要元素的属性发生改变就的需要经过这个动画*/
+            /*  -webkit-transform: translateY(-20px);
+              transform: translateY(-20px);*/
+              -webkit-transform: scale(1.2);
+              transform: scale(1.2);
+              /*=这个scale也可以通过js中设置 但是只要改变了width和height改变了DOM回流不好*/
+          }
+/*          */
+        .boxIcon{
+           margin:50px auto;
+            width:1160px;
+            padding:20px;
+            height:60px;
+            border:2px solid #eee;
+            background: #f7f7f7;
+        }
+          .boxIcon li{
+              width: 290px;
+              float: left;
+              height:60px;
+              font-size: 14px;
+              cursor: pointer;
+
+          }
+          .boxIcon li i{
+              width:60px;
+              height:60px;
+              margin-right:10px;
+              background: url("img/yl.png") no-repeat ;
+              display: inline-block;
+          }
+          .boxIcon li i.ico1{
+              background-position: -91px -4px;
+          }
+          .boxIcon li i.ico2{
+              background-position: -159px -4px;
+          }
+          .boxIcon li i.ico3{
+              background-position: -228px -4px;
+          }
+          .boxIcon li i.ico4{
+              background-position: -295px -6px;
+          }
+          .boxIcon li span{
+          display: inline-block;
+              height:60px;
+              vertical-align: middle;
+          }
+          .boxIcon li:hover i{
+              -webkit-animation: shake 0.5s ease-in-out 0s both;
+              animation: shake 0.5s ease-in-out 0s both;
+          }
+        @-webkit-keyframes shake {
+            0%,50%,100%{
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            25%{
+                -webkit-transform: rotate(-20deg);
+                transform: rotate(-20deg);
+            }
+            75%{
+                -webkit-transform: rotate(20deg);
+                transform: rotate(20deg);
+            }
+        }
+        @keyframes shake {
+              0%,50%,100%{
+                  -webkit-transform: rotate(0deg);
+                  transform: rotate(0deg);
+              }
+              25%{
+                  -webkit-transform: rotate(-20deg);
+                  transform: rotate(-20deg);
+              }
+              75%{
+                  -webkit-transform: rotate(20deg);
+                  transform: rotate(20deg);
+              }
+          }
+    </style>
+</head>
+<body>
+<ul class="boxList clear">
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg"/>
+        </div>
+        <div class="title">黄山</div>
+        <p class="desc">春意撩人登高踏青</p>
+    </li>
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg"/>
+        </div>
+        <div class="title">黄山</div>
+        <p class="desc">春意撩人登高踏青</p>
+    </li>
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg"/>
+        </div>
+        <div class="title">黄山</div>
+        <p class="desc">春意撩人登高踏青</p>
+    </li>
+    <li>
+        <div class="imgBig">
+            <img src="img/hs.jpg"/>
+        </div>
+        <div class="title">黄山</div>
+        <p class="desc">春意撩人登高踏青</p>
+    </li>
+
+</ul>
+<ul class="boxIcon">
+    <li>
+        <i class="ico1"></i>
+        <span>全球500家</span>
+    </li>
+    <li >
+        <i class="ico2" ></i>
+        <span>全球500家</span>
+    </li>
+    <li>
+        <i class="ico3"></i>
+        <span>全球500家</span>
+    </li>
+    <li>
+        <i class="ico4"></i>
+        <span>全球500家</span>
+    </li>
+</ul>
+</body>
+</html>

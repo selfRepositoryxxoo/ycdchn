@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!--user-scalable=no:不让手动放大，这是一般是不可以-->
+    <!--移动端必须加入以下标签：京东加的更多-->
+
+    <title></title>
+    <script type="text/javascript">
+        //检测浏览器是是pc端还是移动端的；在获取当前加载的HTML地址，如果当前的浏览器是移动端，但是我们请求的页面是PC端的，需要跳转到移动端的页面，才可以，如果当前的浏览器是是pc端的，但是我们访问的是移动端的，需要跳转到pc端的页面；
+        var curURL = window.location.href;
+        if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
+            //手机端浏览器
+            if (curURL.indexOf("www.qq.com ") > -1) {
+            window.location.href = "http://xw.qq.com/";
+            }
+        } else {
+            //pc端浏览器
+            if (curURL.indexOf("xw.qq.com") > -1) {
+                window.location.href = "http://www.qq.com/ ";
+            }
+        }
+
+
+
+    </script>
+</head>
+<body>
+<!--假如想点击的时候调出手机的通话，就使用下面的两个就可以了-->
+<a href="tel:18513275464">立即联系</a>
+<a href="sms:18513275464">立即发短信</a>
+</body>
+</html>

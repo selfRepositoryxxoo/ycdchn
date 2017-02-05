@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            height: 100px;
+            width: 100px;
+            position: absolute; /*绝对定位 relative可以吗*/
+            left: 0;
+            top: 0;
+            background: lightsalmon;
+            cursor: move;
+            -webkit-user-select: none;
+            overflow: hidden; /*这个是消除图片拖拽不行的 border：none不行*/
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<div id="box1" style="top: 100px; left: 100px"><img src="1.jpg" style="width: 100px;height: 100px"/></div>
+<div id="box2" style="top: 200px;left: 200px"><img src="2.jpg" style="width: 100px;height: 100px"/></div>
+<div id="box3" style="top: 100px; left: 0; background: lightblue;"></div>
+</body>
+</html>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript">
+
+    var oDivs = document.getElementsByTagName("div");
+    for (var i = 0; i < oDivs.length; i++) {
+        on(oDivs[i], "mousedown", down);
+        on(oDivs[i], "selfDragstart", clearEffect);
+        on(oDivs[i], "selfDraging", getSpeed);
+        on(oDivs[i], "selfDragend", fly);
+        on(oDivs[i], "selfDragend", drop)
+    }
+    function down(e) {
+        this.x = e.pageX;
+        this.y = e.pageY;
+        this.mx = this.offsetLeft;
+        this.my = this.offsetTop;
+        if (this.setCapture) {
+            this.setCapture();
+            on(this, "mousemove", move);
+            on(this, "mouseup", up);
+        } else {
+            var _this = this;
+            this.MOVE = function (e) {//这个必须穿，因为移动的时候，move需要一个e事件对象
+                //从作用域上来看当down这个方法执行的时候，形成一个作用域，当执行到这部的时候；假如没有传e，他就会往上个作用域查找，找到最初的e，所以不行；
+                move.call(_this, e);//
+            };
+            this.UP = function (e) {
+                up.call(_this, e)
+            };
+            on(document, "mousemove", this.MOVE);
+            on(document, "mouseup", this.UP)
+        }
+        e.preventDefault();//这个原因是：拖拽的时候默认选中是文字；所以取消这个默认行为；
+        selfRun.call(this, {type: "selfDragstart"}, e);
+    }
+    function move(e) {
+        var curL = e.pageX - this.x + this.mx;
+        var curT = e.pageY - this.y + this.my;
+        var minL = 0,
+                minT = 0,
+                maxL = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth,
+                maxT = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+        curL = curL < minL ? minL : (curL > maxL ? maxL : curL);
+        curT = curT < minT ? minT : (curT > maxT ? maxT : curT);
+        this.style.left = curL + "px";
+        this.style.top = curT + "px";
+        // getSpeed.call(this, e);//因为用到了e所以必须要穿
+        selfRun.call(this, {type: "selfDraging"}, e)
+    }
+    function up(e) {
+        if (this.releaseCapture) {
+            this.releaseCapture();
+            off(this, "mousemove", move);
+            off(this, "mouseup", up);
+        } else {
+            off(document, "mousemove", this.MOVE);
+            off(document, "mouseup", this.UP);
+        }
+        selfRun.call(this, {type: "selfDragend"}, e)
+    }
+    function clearEffect() {
+        clearInterval(this.flyTimer);
+        clearInterval(this.dropTimer)
+    }
+    function getSpeed(e) {
+        if (!this.pre) {
+            this.pre = e.pageX;
+            return
+        }
+        this.speedFly = e.pageX - this.pre;
+        this.pre = e.pageX
+    }
+    function fly() {
+        var _this = this, speedFly = this.speedFly,
+                maxL = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth;
+        _this.flyTimer = window.setInterval(function () {
+            speedFly *= 0.98;
+            if (Math.abs(speedFly) < 0.5) {
+                window.clearInterval(_this.flyTimer)
+            }
+            var curL = _this.offsetLeft + speedFly;
+            if (curL < 0) {
+                curL = 0;
+                speedFly *= -1;
+            } else if (curL > maxL) {
+                curL = maxL;
+                speedFly *= -1;
+            }
+            _this.style.left = curL + "px";
+        }, 10)
+    }
+    function drop() {
+        var _this = this, drop = 10,
+                flag = 0,
+                maxT = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+        _this.dropTimer = window.setInterval(function () {
+            drop += 10;
+            drop *= 0.98;
+            if (flag >= 2) {
+                window.clearInterval(_this.dropTimer);
+                return
+            }
+            var curT = _this.offsetTop + drop;
+            if (curT >= maxT) {
+                curT = maxT;
+                flag++;
+                drop *= -1
+            } else {
+                flag = 0;
+            }
+            _this.style.top = curT + "px";
+        }, 10)
+
+    }
+
+</script>

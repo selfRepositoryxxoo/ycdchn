@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute;
+            /*   left: 0;
+               right: 0;
+               top: 0;
+               bottom: 0;
+               margin: auto;*/
+            /*第二种方法 需要知道 width 和height*/
+            /*    top: 50%;
+                left: 50%;
+                margin-left: -50px;
+                margin-top: -50px;*/
+            /*以下样式不能变*/
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"></div>
+</body>
+</html>
+<script type="text/javascript">
+    //通过js来实现； 一般不会也用这中方法；
+    var oBox = document.getElementById('box');
+    var winW = document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+    // var boxW = window.getComputedStyle(oBox, null)['width'];
+  /*  var boxW = parseFloat(window.getComputedStyle(oBox, null)['width']);
+    var boxH = parseFloat(window.getComputedStyle(oBox, null)['height']);*/
+    //在IE下怎么用这个   currentStyle[]不是一个函数；这是一个属性和对象；
+    var boxW=parseFloat(oBox.currentStyle['width']);
+    var boxH=parseFloat(oBox.currentStyle['height']);
+    //下面使用的是 box.offsetWidth
+   /* var boxW = box.offsetWidth,
+            boxH = box.offsetHeight;*/
+
+  /*  var boxH = oBox.style.height;*/
+    oBox.style.left = (winW - boxW) / 2 + 'px';
+    oBox.style.top = (winH - boxH) / 2 + 'px';
+
+</script>

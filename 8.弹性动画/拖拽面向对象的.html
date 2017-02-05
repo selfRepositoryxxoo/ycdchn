@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            left: 0;
+            top: 0;
+            position: absolute;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="js/event.js"></script>
+<script>
+    //原来面向过程的drag方法里，this指的是被拖拽的元素
+    //但面向对象的drag里，this是指的这个类的实例，并且在完成这个类上的所有的方法时，都遵守这个原则
+    function Drag(ele) {//ele是被拖拽的DOM对象
+        this.ele = ele;//就是把被拖拽的元素保存在自己的实例上
+        this.x = null;
+        this.y = null;
+        this.mx = null;//null是预留的 undefined是本应该没有的是错的
+        this.my = null;
+        /*      this.DOWN = processThis(this.down, this);
+         this.MOVE = processThis(this.move, this);
+         this.UP = processThis(this.up, this);*/
+        //这个方法不用调用其他的函数
+        var _this = this;
+        this.DOWN = function (e) {
+            _this.down.call(_this, e)
+        };
+        this.UP = function (e) {
+            _this.up.call(_this, e)
+        };
+        this.MOVE = function (e) {
+            _this.move.call(_this, e)
+        };
+
+        //on(this.ele,"mousedown",this.down);//如果这样绑定事件，则this.down方法里的this会按着事件绑定的原则来处理，即：this指向this.ele。和刚才设定的面向对象this的原则冲突了  冲突的话就该会来
+        //运行on  this.DOWN不是又改回来? procssThis返回的是一个匿名函数，this.down里面的this已经变成实例
+        on(this.ele, "mousedown", this.DOWN);//这个改变的是匿名函数中this 是this.Down
+
+        //面向对象在于管理，逻辑还是一样的
+
+    }
+
+    Drag.prototype.down = function (e) {
+        this.x = this.ele.offsetLeft;
+        this.y = this.ele.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+
+        if (this.ele.setCapture) {
+            this.ele.setCapture();
+            on(this.ele, "mousemove", this.MOVE);
+            on(this.ele, "mouseup", this.UP);
+        } else {
+            on(document, "mousemove", this.MOVE);
+            on(document, "mouseup", this.UP);
+        }
+        e.preventDefault();
+    };
+
+    Drag.prototype.move = function (e) {
+        this.ele.style.left = this.x + (e.pageX - this.mx) + "px";
+        this.ele.style.top = this.y + (e.pageY - this.my) + "px";
+    };
+
+    Drag.prototype.up = function (e) {
+        if (this.ele.releaseCapture) {
+            this.ele.releaseCapture();
+            off(this.ele, "mousemove", this.MOVE);
+            off(this.ele, "mouseup", this.UP);
+        } else {
+            off(document, "mousemove", this.MOVE);
+            off(document, "mouseup", this.UP);
+        }
+    };
+
+    new Drag(div1);//为什么不释放？只有不释放才会这些东西保留下来
+
+</script>

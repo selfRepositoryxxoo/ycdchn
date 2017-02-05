@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<pre>
+
+每次显示10个未展开的页码，如果当前页和当前显示的总页码之间差值小于或等于3 时，自动显示后10个页码。 * 算法原理： * 1、计算当前页与常量 SHOWPAGESIZE 之间的差值。 *
+a、由于可能存在当前页大于SHOWPAGE的情况，所以使用当前页对 SHOWPAGESIZE 取模 *
+    b、取模后，再与差值相加，来判断是否需要显示后 10个页码 * 2、计算页码。 * a、要得到当前页所属的页面，则必须对
+SHOWPAGESIZE 取商，这时得到的有可能是一个小数，所以取小于等于它的整数。 * b、通过第一步得到的页码是从 0 开始，所以必须在它的基础上加 1，还原成实际页码。（如：当前页为 1 时，得到的商为 0） *
+3、如果要显示后一个10页，则在之前得到的页码上再加 1 页。 * @param {} cfg * @param {} url * @return {}
+</pre>
+</body>
+</html>
+<script>
+    window.Paginator = function () {
+    }
+    Paginator.prototype = {
+        hasNext: function (currentPage, totalPage) {
+            return (currentPage + 1) > totalPage ? false : true;
+        },
+        hasPrevious: function (currentPage) {
+            return (currentPage - 1) < 1 ? false : true;
+        },
+        getStyle: function (el) {
+            var style = {global: "width:100%; line-height:18px; font-size:12px; text-align:center;color:
+#363;margin - top:15px;", totalPut : "padding:05px;border:1pxsolid #CCC;float:left;background - color:#EFEFEF", out :"float:left;margin-left:5px; padding:0 5px; border:1px solid #CCC", hover:"float:left;margin-left:5px; padding:0 5px;border:1px solid #CCC;background - color:#C6EED5;" }; return eval("style."+el); }, getPageNav : function(cfg){ var nav ="";
+            nav += "共有 " + cfg.totalCount + " 条记录 当前是 " + cfg.currentPage + " / " + cfg.totalPage + " 页";
+            var pageNumParamName = (typeof cfg.pageParamName == 'undefined') ? "currentPage" : cfg.pageParamName;
+            var url = cfg.url + "?" + pageNumParamName + "=";
+            if (!this.hasPrevious(cfg.currentPage)) {
+                nav += "Previous";
+            } else {
+                nav += this.getHrefFromTemplate(url, cfg.currentPage - 1, cfg.currentPage, "Previous");
+            }
+            nav += this.getLinkNum(cfg, url);
+            if (!this.hasNext(cfg.currentPage, cfg.totalPage)) {
+                nav += "Next";
+            } else {
+                nav += this.getHrefFromTemplate(url, cfg.currentPage + 1, cfg.currentPage, "Next");
+            }
+            nav += "";
+            return nav;
+        },
+        getLinkNum: function (cfg, url) {
+            var SHOWPAGESIZE = 10, STEP = 2;
+            var v_c = cfg.currentPage % SHOWPAGESIZE + STEP;
+            var v_page = Math.floor(cfg.currentPage / SHOWPAGESIZE) + 1;
+            endIndex = (v_c < SHOWPAGESIZE) ? v_page * SHOWPAGESIZE : (v_page + 1) * SHOWPAGESIZE;
+            endIndex = (endIndex <= cfg.totalPage) ? endIndex : cfg.totalPage;
+            var linkStr = "";
+            if (cfg.currentPage < 5) {
+                for (var i = 1; i <= 10;
+                     i++) {
+                    linkStr += this.getHrefFromTemplate(url, i, cfg.currentPage, i);
+                }
+            } else if (5 <= cfg.currentPage <= (endIndex - 5)) {
+                for (var i = (cfg.currentPage - 4); i <= (cfg.currentPage + 5); i++) {
+                    linkStr +=
+                            this.getHrefFromTemplate(url, i, cfg.currentPage, i);
+                }
+            } else {
+                for (var i = (endIndex - (endIndex - 10)); i <= endIndex; i++) {
+                    linkStr += this.getHrefFromTemplate(url, i, cfg.currentPage, i);
+                }
+            }
+            return linkStr;
+        },
+        getHrefFromTemplate: function (url, pageIndex, currentPage, text) {
+            var v_url = url + pageIndex;
+            var str = "" + text + "";
+            return str;
+        },
+        getMouseStr: function () {
+            var over = "this.style.border='1px solid #666'";
+            var out = "this.style.border='1px solid #CCC'";
+            return "onmouseover=\"" + over + "\" onmouseout=\"" + out + "\" ";
+        }
+    }
+
+
+</script>

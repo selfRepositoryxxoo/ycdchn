@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>手机号查询</title>
+</head>
+<body>
+<input placeholder="请输入" type="text" id="search"/> <input type="button" id="btn" value="点击查询"/>
+<ul id="info">
+
+
+</ul>
+</body>
+</html>
+<script src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    var search = $('#search');
+    var btn = $('#btn');
+    var info=$('#info');
+    btn.on('click',function(){
+        var val=search.val();
+        if(val){
+            $.ajax({
+                url:'https://suggest.taobao.com/sug',
+                data:{q:val},//为什么这个不行tel改了之后
+                dataType:'jsonp',
+                jsonp:'callback',//这个改了为什么还能返回数据 不是人家规定吗
+                jsonpCallback:'cb',
+                success:function(data){
+                    console.log(data);
+                    info.html(data);
+                    //对象是没有办法直接在添加到浏览器中的
+                    info.html( JSON.stringify(data));
+                    console.log(JSON.stringify(data));
+                }
+            })
+        }
+    })
+
+
+</script>

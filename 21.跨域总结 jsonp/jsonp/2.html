@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<!--<script src="jquery-1.11.3.js"></script>-->
+
+<script type="text/javascript" src="../jquery-1.11.3.min.js"></script>
+<script>
+    //我们创建的服务必须所有的请求全部 在根目录下，这是第一，
+    //然后第二 假如我这个2.html下面的目录 在json下面必须改目录 http://localhost:7777/jsonp/2.html
+    //这就是pathname query     假如不在jsonp下面下，
+    // jsonp 就在不用写http://localhost:7777/2.html
+    function fn(data) {
+        console.log(data);
+    }
+    $.ajax({
+        url: "http://matchweb.sports.qq.com/kbs/calendar?columnId=100000",
+        type: "get",
+        dataType: "jsonp",
+        jsonpCallback: "fn"
+    });
+</script>

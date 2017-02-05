@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+</body>
+</html>
+<script>
+    //同时处理也要处理数据类型不同的  这种对引用对象数据类型的肯定不行 都是typeof都是对象的
+    var ary = [1, 3, 4, 5, '3', '4', 4, 6, 5, 'true', 'true',function(){console.log('ok')},function(){console.log('bb')}];
+    function noRepeat(ary) {
+        var obj = {},
+                arr = [];
+        for (var i = 0, len = ary.length; i < len; i++) {
+            if (!(obj[ary[i] + typeof ary[i]])) {
+             /*   console.log(ary[i]);
+                console.log(typeof ary[i])
+                console.log(obj[ary[i] + typeof ary[i]]);*/
+                arr.push(ary[i]);
+                //必须的赋值 否则每次获取的对象的值没有赋值 肯定是undefined；
+                //没有赋值，肯定会往下走 放进来；
+                obj[ary[i] + typeof ary[i]] = 1
+            }
+        }
+        return arr
+    }
+    var res = noRepeat(ary);
+    console.log(res)
+
+
+</script>
+
+
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div {
+            margin: 0;
+            padding: 0;
+        }
+        div {
+            height: 100px;
+            width: 100px;
+            position: absolute; /*绝对定位 relative可以吗*/
+            left: 0;
+            top: 0;
+            background: lightsalmon;
+            cursor: move;
+            -webkit-user-select: none;
+            overflow: hidden;/*这个是消除图片拖拽不行的 border：none不行*/
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<div id="box1" style="top: 100px; left: 100px"><img src="1.jpg" style="width: 100px;height: 100px"/></div>
+<div id="box2" style="top: 200px;left: 200px"><img src="2.jpg" style="width: 100px;height: 100px"/></div>
+<div id="box3" style="top: 100px; left: 0; background: lightblue;"></div>
+</body>
+</html>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript" src="drag.js"></script>
+<script type="text/javascript">
+
+    var oDivs = document.getElementsByTagName("div");
+    for (var i = 0; i < oDivs.length; i++) {
+        new Drag(oDivs[i]);
+    }
+
+</script>

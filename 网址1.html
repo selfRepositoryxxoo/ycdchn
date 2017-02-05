@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var str = "https://www.duba.com/?f=numswdh&t=--type&ft=gjlock&--type=0";
+    /*    //这是第一种
+     function queryURLPar(url) {
+     var obj = {};
+     url = url || window.location.href;
+     var reg = /([^?=&]+)=([^?=&]+)/g;
+     url.replace(reg, function () {
+     obj[arguments[1]] = arguments[2];
+     });
+     console.log(obj);
+     return obj;
+     }
+     queryURLPar(str);*/
+    //这是第二种
+    function queryURLPar(url) {
+        var obj = {};
+        var con = url.split('?')[1].split('&');
+        for (var i = 0; i < con.length; i++) {
+            var ary = con[i].split('=');
+            obj[ary[0]] = ary[1];
+        }
+        return obj
+    }
+    console.log(queryURLPar(str));
+
+
+</script>

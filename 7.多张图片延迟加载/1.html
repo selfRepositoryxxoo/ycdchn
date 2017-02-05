@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div,p{
+            margin: 0;padding: 0;
+        }
+        p{
+            width: 200px;
+            height: 200px;
+            background: url("img2/default.gif") no-repeat center center #e1e1e1;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<div style="height: 1000px"></div>
+<p><img src="" trueImg="img/1.jpg"/></p>
+<p><img src="" trueImg="img/1.jpg"/></p>
+<p><img src="" trueImg="img/1.jpg"/></p>
+<p><img src="" trueImg="img/1.jpg"/></p>
+</body>
+</html>
+<script src="js/utils.js"></script>
+<script>
+    var oImgs=document.getElementsByTagName("img");
+    window.onscroll=function(){
+        for(var i=0;i<oImgs.length;i++){
+            var curImg=oImgs[i];
+            lazyLoad(curImg)
+        }
+        function lazyLoad(curImg){
+            if(curImg.loaded){
+                return
+            }
+            var wimBottom=utils.win("clientHeight")+utils.win("scrollTop");
+            var imgT=utils.offset(curImg).top+curImg.offsetHeight;
+            if(imgT<wimBottom){
+                var real=curImg.getAttribute("trueImg");
+                var tempImg=new Image;
+                tempImg.src=real;
+                tempImg.onload=function(){
+                    curImg.src=real;
+                    curImg.loaded=true
+                }
+            }
+        }
+    }
+
+
+
+
+</script>
